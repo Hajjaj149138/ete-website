@@ -25,8 +25,8 @@ import nodemailer from "nodemailer";
 
 /* ─── CRM Config ─────────────────────────────────────── */
 const CRM_ENDPOINT  = "https://crm.ete.sveducrm.com/api/web-form";
-const CRM_SOURCE    = "website";
-const CRM_SOURCE_ID = 6; // ⚠️ UPDATE: get from /api/info-form/website
+const CRM_SOURCE    = "Website";
+const CRM_SOURCE_ID = 18; // ⚠️ UPDATE: get from /api/info-form/website
 
 /* ─── Email Config ───────────────────────────────────── */
 const NOTIFY_EMAIL = "info@easytoeurope.com";
@@ -35,19 +35,23 @@ const GMAIL_PASS   = process.env.GMAIL_PASS  ?? "";
 
 /* ─── Country IDs (verify from /base-filter API) ─────── */
 const COUNTRY_IDS: Record<string, number> = {
-  "Australia":      3,
-  "Canada":         4,
-  "Sweden":         5,
-  "United Kingdom": 6,
-  "Hungary":        7,
-  "Lithuania":      8,
-  "Malaysia":       9,
-  "Austria":        10,
-  "Denmark":        11,
-  "Cyprus":         12,
-  "Netherlands":    13,
-  "Malta":          14,
-  "Germany":        15,
+
+  //"United States":  5,
+  //"New Zealand":  6,  
+
+  "Australia":      3,     // Okay
+  "Canada":         4,    // Okay
+  "Sweden":         7,   // Okay
+  "United Kingdom": 2,  // Okay
+  "Hungary":        12,   // Okay
+  "Lithuania":      10,   // Okay
+  "Malaysia":       9,    // Okay
+  "Austria":        11,   // Okay
+  "Denmark":        8,    // Okay
+  "Cyprus":         14,   // Okay
+  "Netherlands":    13,  // Okay 
+  "Malta":          15,  // Okay
+  "Germany":        16, // Okay
 };
 
 export async function POST(req: NextRequest) {

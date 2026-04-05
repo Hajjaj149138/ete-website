@@ -1,0 +1,20 @@
+/*
+ * ════════════════════════════════════════════════
+ *  FILE: src/app/globals.css
+ *  PURPOSE: Imports all CSS files in correct order
+ *
+ *  FILE MAP:
+ *  1. themes.css      → All colors & design tokens
+ *  2. base.css        → Reset, buttons, cards, animations
+ *  3. navbar.css      → Top navigation
+ *  4. footer.css      → Footer + consultation popup
+ *  5. home.css        → Home page only
+ *  6. pages.css       → All other pages
+ * ════════════════════════════════════════════════
+ */
+@import "../styles/themes.css";
+@import "../styles/base.css";
+@import "../styles/components/navbar.css";
+@import "../styles/components/footer.css";
+@import "../styles/pages/home.css";
+@import "../styles/pages/pages.css";

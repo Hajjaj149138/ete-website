@@ -176,3 +176,29 @@ a.ete-footer-contact:hover .ete-footer-contact-text { color:var(--gold) }
   font-size: .58rem; color: rgba(201,168,76,.6);
   text-transform: uppercase; letter-spacing: .12em;
 }
+
+/* ── Footer Legal Links (Terms / Privacy) ── */
+.ete-footer-bottom-left {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.ete-footer-legal-links {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.ete-footer-legal-sep {
+  font-size: .6rem;
+  color: rgba(255,255,255,.18);
+}
+.ete-footer-legal-link {
+  font-size: .65rem;
+  color: rgba(255,255,255,.35);
+  text-decoration: none;
+  transition: color .15s;
+}
+.ete-footer-legal-link:hover {
+  color: var(--gold);
+}

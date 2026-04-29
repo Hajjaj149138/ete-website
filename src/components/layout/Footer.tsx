@@ -23,8 +23,6 @@ export default function Footer() {
 
   return (
     <footer>
-
-
       {/* ── Footer Body ── */}
       <div className="ete-footer-body">
         <div className="ete-container">
@@ -95,10 +93,19 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* Bottom */}
+          {/* ── Bottom Bar ── */}
           <div className="ete-footer-bottom">
             <div className="ete-footer-bottom-inner">
-              <span className="ete-footer-copy">© {new Date().getFullYear()} Easy To Europe. All Rights Reserved.</span>
+              <div className="ete-footer-bottom-left">
+                <span className="ete-footer-copy">
+                  © {new Date().getFullYear()} Easy To Europe. All Rights Reserved.
+                </span>
+                <span className="ete-footer-legal-links">
+                  <Link href="/terms-of-use" className="ete-footer-legal-link">Terms of Use</Link>
+                  <span className="ete-footer-legal-sep">|</span>
+                  <Link href="/privacy-policy" className="ete-footer-legal-link">Privacy Policy</Link>
+                </span>
+              </div>
               <span className="ete-footer-dev">Built by <a href="#">Md. Hajjaj Bin Sonosi</a></span>
             </div>
           </div>

@@ -2,16 +2,28 @@
 import { useEffect } from "react";
 import { aboutData, siteConfig } from "@/data/content";
 import ConsultationButton from "@/components/ui/ConsultationButton";
-import { CheckCircle, Target, Eye, Linkedin, Users, Globe, Award, Star } from "lucide-react";
+import { CheckCircle, Target, Eye, Linkedin, Users, Globe, Award, Star, Camera } from "lucide-react";
+
 const LEAD_GRADS = [
   "linear-gradient(160deg,#0A1628 0%,#1E6FD9 100%)",
   "linear-gradient(160deg,#065F46 0%,#059669 100%)",
   "linear-gradient(160deg,#6D28D9 0%,#8B5CF6 100%)",
 ];
-const TEAM_COLORS = [
-  "#0A1628","#1E6FD9","#065F46","#B45309","#6D28D9","#9D174D",
-  "#0E7490","#1D4ED8","#374151","#B91C1C","#4D7C0F","#92400E",
-  "#1E40AF","#0E7490","#6D28D9","#B45309","#065F46",
+
+// Beautiful gradient pallette for team members without photos
+const TEAM_GRADS = [
+  "linear-gradient(135deg,#0A1628 0%,#1E6FD9 100%)",
+  "linear-gradient(135deg,#065F46 0%,#10B981 100%)",
+  "linear-gradient(135deg,#6D28D9 0%,#A78BFA 100%)",
+  "linear-gradient(135deg,#B45309 0%,#F59E0B 100%)",
+  "linear-gradient(135deg,#9D174D 0%,#EC4899 100%)",
+  "linear-gradient(135deg,#0E7490 0%,#22D3EE 100%)",
+  "linear-gradient(135deg,#1D4ED8 0%,#60A5FA 100%)",
+  "linear-gradient(135deg,#374151 0%,#9CA3AF 100%)",
+  "linear-gradient(135deg,#B91C1C 0%,#F87171 100%)",
+  "linear-gradient(135deg,#4D7C0F 0%,#84CC16 100%)",
+  "linear-gradient(135deg,#92400E 0%,#D97706 100%)",
+  "linear-gradient(135deg,#1E40AF 0%,#3B82F6 100%)",
 ];
 
 export default function AboutPage() {
@@ -22,6 +34,7 @@ export default function AboutPage() {
     document.querySelectorAll(".reveal,.reveal-left,.reveal-scale").forEach(el=>obs.observe(el));
     return ()=>obs.disconnect();
   },[]);
+
   return (
     <div>
       {/* ── Hero ── */}
@@ -33,7 +46,7 @@ export default function AboutPage() {
           <div className="about-hero-left">
             <span className="ete-tag ete-tag-inv" style={{marginBottom:16,display:"inline-flex"}}>Our Story</span>
             <h1 className="about-hero-h1">Your Trusted<br/><span className="about-hero-accent">Education Partner</span></h1>
-            <p className="about-hero-p">At Easy To Europe, we simplify your journey to top global destinations. Transparency, expertise, and genuine care have been our promise since 2015.</p>
+            <p className="about-hero-p">At Easy To Europe, we simplify your journey to top global destinations. Transparency, expertise, and genuine care have been our promise since 2020.</p>
             <div className="about-hero-actions">
               <ConsultationButton label="Start Your Journey" variant="accent" size="lg"/>
             </div>
@@ -54,14 +67,11 @@ export default function AboutPage() {
       <section className="abt-impact-section">
         <div className="abt-impact-bg-grid"/>
         <div className="container-xl" style={{position:"relative",zIndex:2}}>
-
           <div className="ete-section-hd ete-center reveal" style={{marginBottom:"3rem"}}>
             <span className="ete-tag">Impact & Story</span>
             <h2 className="ete-sec-title">Built on Trust.<br/><span>Measured in Students.</span></h2>
             <p className="ete-sec-sub">Every number here is a real person — a student who trusted us with their future and made it.</p>
           </div>
-
-          {/* Big impact numbers */}
           <div className="abt-impact-numbers">
             {[
               { num:"1,000+", label:"Students Placed",       icon:"🎓", sub:"Across 12 countries" },
@@ -79,14 +89,11 @@ export default function AboutPage() {
               </div>
             ))}
           </div>
-
-          {/* Story + milestones */}
           <div className="abt-story-row">
             <div className="abt-story-quote-block reveal">
               <div className="abt-story-quote-mark">&ldquo;</div>
               <blockquote className="abt-story-quote">
-                We started Easy To Europe with one belief: every student deserves honest, transparent guidance — not just a processed application.
-                Five years later, 1,000+ students have crossed borders and built careers they once only dreamed of.
+                We started Easy To Europe with one belief: every student deserves honest, transparent guidance — not just a processed application. Five years later, 1,000+ students have crossed borders and built careers they once only dreamed of.
               </blockquote>
               <div className="abt-story-author">
                 <div className="abt-story-author-dot"/>
@@ -116,19 +123,15 @@ export default function AboutPage() {
               ))}
             </div>
           </div>
-
         </div>
       </section>
 
-            {/* ── Mission & Vision ── */}
+      {/* ── Mission & Vision ── */}
       <section className="mv-section">
-        {/* Background decoration */}
         <div className="mv-bg-blob mv-blob-1"/>
         <div className="mv-bg-blob mv-blob-2"/>
         <div className="mv-bg-dots"/>
-
         <div className="container-xl" style={{position:"relative",zIndex:2}}>
-          {/* Section header */}
           <div className="ete-section-hd ete-center reveal" style={{marginBottom:"2.75rem"}}>
             <span className="ete-tag mv-tag">Our Purpose</span>
             <h2 style={{fontFamily:"'Playfair Display',serif",fontWeight:700,fontSize:"clamp(1.5rem,3vw,2.1rem)",color:"var(--text-primary)",marginTop:12,letterSpacing:"-.015em"}}>
@@ -138,8 +141,6 @@ export default function AboutPage() {
               Every student who walks through our door deserves a future without borders.
             </p>
           </div>
-
-          {/* Feature strip */}
           <div className="mv-feature-strip reveal">
             {[
               {i:"🎯", t:"Student-First Approach", s:"Every decision centres around student success and transparency."},
@@ -155,18 +156,12 @@ export default function AboutPage() {
               </div>
             ))}
           </div>
-
-          {/* Cards grid */}
           <div className="mv-cards-grid">
-
-            {/* MISSION card */}
             <div className="mv-card mv-card-mission reveal">
               <div className="mv-card-glow mv-glow-blue"/>
               <div className="mv-card-inner">
                 <div className="mv-card-header">
-                  <div className="mv-icon-ring mv-ring-blue">
-                    <Target size={20} style={{color:"#60a5fa"}}/>
-                  </div>
+                  <div className="mv-icon-ring mv-ring-blue"><Target size={20} style={{color:"#60a5fa"}}/></div>
                   <div>
                     <div className="mv-eyebrow mv-eyebrow-blue">Our Mission</div>
                     <h3 className="mv-card-title">{aboutData.mission.title}</h3>
@@ -187,15 +182,11 @@ export default function AboutPage() {
                 </div>
               </div>
             </div>
-
-            {/* VISION card */}
             <div className="mv-card mv-card-vision reveal">
               <div className="mv-card-glow mv-glow-purple"/>
               <div className="mv-card-inner">
                 <div className="mv-card-header">
-                  <div className="mv-icon-ring mv-ring-purple">
-                    <Eye size={20} style={{color:"#a78bfa"}}/>
-                  </div>
+                  <div className="mv-icon-ring mv-ring-purple"><Eye size={20} style={{color:"#a78bfa"}}/></div>
                   <div>
                     <div className="mv-eyebrow mv-eyebrow-purple">Our Vision</div>
                     <h3 className="mv-card-title">{aboutData.vision.title}</h3>
@@ -217,8 +208,6 @@ export default function AboutPage() {
               </div>
             </div>
           </div>
-
-          {/* Core values row */}
           <div className="mv-values reveal">
             {[
               {i:"🎯", t:"Student First",   d:"Every decision starts and ends with student success."},
@@ -290,33 +279,66 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* ── Team ── */}
-      <section className="ete-section">
+      {/* ══════════════════════════════════════════
+           ── Team Section — REDESIGNED ──
+         ══════════════════════════════════════════ */}
+      <section className="ete-section team-section-v2">
         <div className="container-xl">
           <div className="ete-section-hd ete-center reveal">
             <span className="ete-tag"><Users size={9}/> Our Experts</span>
             <h2 className="ete-sec-title">The Faces Behind <span>Easy To Europe</span></h2>
-            <p className="ete-sec-sub">A passionate team of consultants, visa experts, and student success managers.</p>
+            <p className="ete-sec-sub">A passionate team of consultants, visa experts, and student success managers — each one dedicated to your journey.</p>
           </div>
-          <div className="about-team-grid">
-            {(aboutData.team as any[]).map((m,i)=>(
-              <div key={m.name} className={`about-team-card reveal delay-${i%6+1}`}>
-                <div className="about-team-avatar" style={{background:TEAM_COLORS[i%TEAM_COLORS.length]}}>
-                  {m.photo
-                    ? <img src={m.photo} alt={m.name}/>
-                    : <span>{m.name.split(" ").map((w:string)=>w[0]).join("").slice(0,2)}</span>
-                  }
+
+          <div className="team-v2-grid">
+            {(aboutData.team as any[]).map((m, i) => (
+              <div key={m.name} className={`team-v2-card reveal delay-${i % 5 + 1}`}>
+
+                {/* Photo / Avatar area */}
+                <div className="team-v2-photo-wrap">
+                  <div
+                    className="team-v2-photo-bg"
+                    style={{ background: TEAM_GRADS[i % TEAM_GRADS.length] }}
+                  >
+                    {m.photo ? (
+                      <img src={m.photo} alt={m.name} className="team-v2-photo-img" />
+                    ) : (
+                      <div className="team-v2-initials">
+                        {m.name.split(" ").map((w: string) => w[0]).join("").slice(0, 2)}
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Nickname badge */}
+                  {m.nickname && (
+                    <div className="team-v2-nick-badge">"{m.nickname}"</div>
+                  )}
                 </div>
-                {m.nickname && <div className="about-team-nick">"{m.nickname}"</div>}
-                <div className="about-team-name">{m.name}</div>
-                <div className="about-team-role">{m.role}</div>
-                {m.trait && <div className="about-team-trait">{m.trait}</div>}
+
+                {/* Info */}
+                <div className="team-v2-info">
+                  <div className="team-v2-name">{m.name}</div>
+                  <div className="team-v2-role">{m.role}</div>
+                  {m.trait && (
+                    <div className="team-v2-trait">
+                      <span className="team-v2-trait-dot"/>
+                      {m.trait}
+                    </div>
+                  )}
+                </div>
+
               </div>
             ))}
           </div>
-          <p className="testi2-hint reveal" style={{marginTop:"1.5rem"}}>
-            💡 Add team photos → <code>content.ts</code> → <code>aboutData.team</code> → add <code>photo: "https://url"</code> field
-          </p>
+
+          {/* Photo upload hint */}
+          <div className="team-v2-hint reveal">
+            <Camera size={14} style={{ flexShrink: 0 }} />
+            <span>
+              To add team photos, open <code>src/data/content.ts</code> → find <code>aboutData.team</code> → add <code>photo: "https://your-image-url"</code> to any member
+            </span>
+          </div>
+
         </div>
       </section>
 

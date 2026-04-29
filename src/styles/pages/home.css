@@ -785,3 +785,97 @@
   opacity: 0; transition: opacity .3s;
 }
 .why-card:hover .why-card-bar { opacity: 1 }
+
+/* ═══════════════════════════════════════════════════════════════
+   UNIVERSITY PARTNERS CAROUSEL
+   ═══════════════════════════════════════════════════════════════ */
+
+.uni-carousel-section {
+  padding: 4rem 0;
+  background: var(--bg);
+  overflow: hidden;
+}
+
+.uni-carousel-wrap {
+  overflow: hidden;
+  mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
+}
+
+.uni-carousel-track {
+  display: flex;
+  gap: 16px;
+  width: max-content;
+  animation: uni-scroll-left 40s linear infinite;
+}
+.uni-track-2 {
+  animation: uni-scroll-right 45s linear infinite;
+}
+
+@keyframes uni-scroll-left {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+@keyframes uni-scroll-right {
+  0%   { transform: translateX(-50%); }
+  100% { transform: translateX(0); }
+}
+
+.uni-carousel-wrap:hover .uni-carousel-track {
+  animation-play-state: paused;
+}
+
+/* Individual university card */
+.uni-card {
+  flex-shrink: 0;
+  width: 160px;
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 18px 14px 14px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  transition: border-color .2s, transform .2s, box-shadow .2s;
+  cursor: default;
+}
+.uni-card:hover {
+  border-color: var(--gold-border);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(0,0,0,.08);
+}
+
+.uni-card-logo-wrap {
+  width: 64px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.uni-card-logo {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  filter: var(--uni-logo-filter, none);
+}
+
+html.dark .uni-card-logo {
+  filter: brightness(0) invert(1) opacity(.75);
+}
+
+.uni-card-name {
+  font-size: .72rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  text-align: center;
+  line-height: 1.35;
+}
+
+.uni-card-country {
+  font-size: .64rem;
+  color: var(--text-muted);
+  text-align: center;
+}

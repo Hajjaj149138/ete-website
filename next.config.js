@@ -1,9 +1,14 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    domains: ['flagcdn.com'],
-    remotePatterns: [{ protocol:'https', hostname:'flagcdn.com' }],
+    remotePatterns: [
+      { protocol: 'https', hostname: 'cdn.sanity.io' },
+      { protocol: 'https', hostname: 'images.unsplash.com' },
+      { protocol: 'https', hostname: 'easytoeurope.com' },
+      { protocol: 'https', hostname: 'flagcdn.com' },
+      { protocol: 'https', hostname: 'seeklogo.com' },
+      { protocol: 'https', hostname: 'upload.wikimedia.org' },
+    ],
   },
-  compress: true,
 };
 module.exports = nextConfig;

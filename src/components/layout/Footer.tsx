@@ -106,7 +106,7 @@ export default function Footer() {
                   <Link href="/privacy-policy" className="ete-footer-legal-link">Privacy Policy</Link>
                 </span>
               </div>
-              <span className="ete-footer-dev">Built by <a href="#">Md. Hajjaj Bin Sonosi</a></span>
+              <span className="ete-footer-dev">Built by <a href="https://hajjaj-portfolio.vercel.app/" target="_blank" rel="noreferrer">Md. Hajjaj Bin Sonosi</a></span>
             </div>
           </div>
         </div>

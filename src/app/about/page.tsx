@@ -335,7 +335,7 @@ export default function AboutPage() {
           <div className="team-v2-hint reveal">
             <Camera size={14} style={{ flexShrink: 0 }} />
             <span>
-              To add team photos, open <code>src/data/content.ts</code> → find <code>aboutData.team</code> → add <code>photo: "https://your-image-url"</code> to any member
+              “Education is the passport to the future, for tomorrow belongs to those who prepare for it today.” <strong>— Malcolm X</strong>
             </span>
           </div>
 

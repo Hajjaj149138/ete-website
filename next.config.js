@@ -2,12 +2,11 @@
 const nextConfig = {
   images: {
     remotePatterns: [
-      { protocol: 'https', hostname: 'cdn.sanity.io' },
-      { protocol: 'https', hostname: 'images.unsplash.com' },
-      { protocol: 'https', hostname: 'easytoeurope.com' },
-      { protocol: 'https', hostname: 'flagcdn.com' },
-      { protocol: 'https', hostname: 'seeklogo.com' },
-      { protocol: 'https', hostname: 'upload.wikimedia.org' },
+      { protocol: 'https', hostname: 'cdn.sanity.io' },     // future Sanity CMS images
+      { protocol: 'https', hostname: 'flagcdn.com' },        // country flag icons
+      { protocol: 'https', hostname: 'seeklogo.com' },       // partner university logos
+      { protocol: 'https', hostname: 'upload.wikimedia.org' },// partner university logos
+      { protocol: 'https', hostname: 'www.nup.ac.cy' },      // Neapolis Univ Pafos logo
     ],
   },
 };

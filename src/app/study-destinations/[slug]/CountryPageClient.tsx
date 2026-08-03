@@ -11,20 +11,13 @@ import { destinations, getFlagUrl, siteConfig } from "@/data/content";
 import ConsultationButton from "@/components/ui/ConsultationButton";
 
 /* ─── Hero images per country ────────────────────────────────── */
-const HERO_IMG: Record<string, string> = {
-  "australia":      "https://images.unsplash.com/photo-1506973035872-a4ec16b8e8d9?w=1400&q=80&auto=format&fit=crop",
-  "sweden":         "https://images.unsplash.com/photo-1509356843151-3e7d96241e11?w=1400&q=80&auto=format&fit=crop",
-  "united-kingdom": "https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?w=1400&q=80&auto=format&fit=crop",
-  "canada":         "https://images.unsplash.com/photo-1517935706615-2717063c2225?w=1400&q=80&auto=format&fit=crop",
-  "hungary":        "https://images.unsplash.com/photo-1551867633-194f125bddfa?w=1400&q=80&auto=format&fit=crop",
-  "lithuania":      "https://images.unsplash.com/photo-1577086664693-894d8405334a?w=1400&q=80&auto=format&fit=crop",
-  "malaysia":       "https://images.unsplash.com/photo-1596422846543-75c6fc197f07?w=1400&q=80&auto=format&fit=crop",
-  "austria":        "https://images.unsplash.com/photo-1516550893923-42d28e5677af?w=1400&q=80&auto=format&fit=crop",
-  "denmark":        "https://images.unsplash.com/photo-1513622470522-26c3c8a854bc?w=1400&q=80&auto=format&fit=crop",
-  "cyprus":         "https://images.unsplash.com/photo-1489493585363-d69421e0edd3?w=1400&q=80&auto=format&fit=crop",
-  "netherlands":    "https://images.unsplash.com/photo-1512470876302-972faa2aa9a4?w=1400&q=80&auto=format&fit=crop",
-  "malta":          "https://images.unsplash.com/photo-1555990538-c3fe2de8bfb9?w=1400&q=80&auto=format&fit=crop",
-};
+/* Now sourced from each destination's `image` field in
+   src/data/content.ts (points to /public/images/destinations/) —
+   the same photo shown on the homepage destination cards.
+   Edit content.ts, not here, to change a country's photo. */
+const HERO_IMG: Record<string, string> = Object.fromEntries(
+  destinations.map((d: any) => [d.slug, d.image || `/images/destinations/${d.slug}.jpg`])
+);
 
 /* ─── Extended data per country ─────────────────────────────── */
 const EXTRA: Record<string, any> = {
@@ -397,7 +390,7 @@ export default function CountryPageClient() {
     <div className="cp-page-root">
 
       {/* ══ HERO ══ */}
-      <section className="cp-hero-v2" style={{backgroundImage:`url(${HERO_IMG[slug] || "https://images.unsplash.com/photo-1467269204594-9661b134dd2b?w=1400&q=80"})`}}>
+      <section className="cp-hero-v2" style={{backgroundImage:`url(${HERO_IMG[slug] || "/images/destinations/default.jpg"})`}}>
         <div className="cp-hero-overlay"/>
         <div className="cp-hero-color-tint" style={{background:`${dest.color}44`}}/>
         <div className="cp-hero-texture"/>

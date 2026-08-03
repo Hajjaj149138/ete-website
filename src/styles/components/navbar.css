@@ -28,9 +28,13 @@
 }
 .nav-ann-bar button:hover { background: rgba(0,0,0,.2) }
 
+/* ── Sticky wrapper: keeps announcement bar + header pinned together ── */
+.nav-sticky-wrap {
+  position: sticky; top: 0; z-index: 100;
+}
+
 /* ── Main header ── */
 .nav-header {
-  position: sticky; top: 0; z-index: 100;
   background: #ffffff;
   border-bottom: 1px solid rgba(10,22,40,.08);
   transition: background .3s, box-shadow .3s, border-color .3s;

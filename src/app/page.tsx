@@ -29,21 +29,13 @@ const AWARDS = [
   { icon:"⭐", title:"5+ Years of Excellence",      org:"Education Industry · 2024" },
 ];
 
-/* ─── Destinations ─── */
+/* ─── Destinations ───
+   Images now come from each destination's `image` field in
+   src/data/content.ts (which points to /public/images/destinations/).
+   Edit the image there — not here — to change a country photo. */
 const DEST_IMAGES: Record<string,string> = {
-  australia:"https://easytoeurope.com/wp-content/uploads/2026/01/australia-country-image.jpg",
-  sweden:"https://images.unsplash.com/photo-1509356843151-3e7d96241e11?w=600&q=80",
-  "united-kingdom":"https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?w=600&q=80",
-  canada:"https://images.unsplash.com/photo-1517935706615-2717063c2225?w=600&q=80",
-  hungary:"https://images.unsplash.com/photo-1541849546-216549ae216d?w=600&q=80",
-  lithuania:"https://easytoeurope.com/wp-content/uploads/2026/01/Lithuinia_country_flag.jpg",
-  malaysia:"https://images.unsplash.com/photo-1596422846543-75c6fc197f07?w=600&q=80",
-  austria:"https://images.unsplash.com/photo-1516550893923-42d28e5677af?w=600&q=80",
-  denmark:"https://images.unsplash.com/photo-1513622470522-26c3c8a854bc?w=600&q=80",
-  cyprus:"https://easytoeurope.com/wp-content/uploads/2026/01/Cyprus_country_flag.jpg",
-  netherlands:"https://images.unsplash.com/photo-1512470876302-972faa2aa9a4?w=600&q=80",
-  malta:"https://easytoeurope.com/wp-content/uploads/2026/01/Malta_country_image.jpg",
-  germany:"https://images.unsplash.com/photo-1467269204594-9661b134dd2b?w=600&q=80",
+  ...Object.fromEntries(destinations.map(d => [d.slug, (d as any).image || "/images/destinations/" + d.slug + ".jpg"])),
+  germany:"/images/destinations/germany.jpg",
 };
 const DEST_TAGLINES: Record<string,string> = {
   australia:"Unlock Future Opportunities", sweden:"World-Class Education Hub",
@@ -62,15 +54,22 @@ const VIDEOS = [
   { id:"cvz7pkRzs_0", url:"https://www.youtube.com/shorts/cvz7pkRzs_0", title:"Country Guide",         label:"Country Guide" },
 ];
 
-/* ─── Testimonials ─── */
-const TESTIMONIALS = [
-  { name:"Urmi Hasan Shanta",  country:"Lithuania", flag:"🇱🇹", uni:"Mykolas Romeris University",      rating:5, quote:"Lithuania has been an amazing experience for my higher studies. Mykolas Romeris University offers a great environment and the visa process was seamless.", photo:"https://easytoeurope.com/wp-content/uploads/2026/01/urmi.jpg" },
-  { name:"Ferdous Woahid Raz", country:"UK",        flag:"🇬🇧", uni:"Cardiff Metropolitan University", rating:5, quote:"The mock interviews helped me build confidence for Cardiff Metropolitan University. The team's professional support made my UK dream come true.", photo:"https://easytoeurope.com/wp-content/uploads/2026/01/ferdous.jpg" },
-  { name:"Ahsanul Islam",      country:"Australia", flag:"🇦🇺", uni:"ASA Institute",                   rating:5, quote:"Studying in Australia was a big decision. ASA Institute's curriculum is top-notch, and the guidance I received for my visa was exceptional.", photo:"https://easytoeurope.com/wp-content/uploads/2026/01/ahsanul.jpg" },
-  { name:"Miskatul Islam",     country:"Sweden",    flag:"🇸🇪", uni:"Uppsala University",              rating:5, quote:"Sweden offers world-class education with great innovation. The English-taught programs and student-friendly environment are truly impressive.", photo:"https://easytoeurope.com/wp-content/uploads/2026/01/miskatul.jpg" },
-  { name:"Tanvir Ahmed",       country:"Germany",   flag:"🇩🇪", uni:"TU Berlin",                      rating:5, quote:"The Opportunity Card guidance was incredibly detailed. They helped me score 8 points and get my visa approved quickly.", photo:"" },
-  { name:"Rafiq Hossain",      country:"Canada",    flag:"🇨🇦", uni:"University of Toronto",           rating:5, quote:"Professional, transparent, and genuinely caring. My PGWP and PR pathway planning was done perfectly.", photo:"" },
-];
+/* ─── Testimonials ───
+   Source data + photos now live in content.ts → homePage.testimonials.items
+   (photos point to /public/images/testimonials/). Edit that file to
+   add/remove/change testimonials — this page just displays them. */
+const TESTIMONIAL_FLAGS: Record<string,string> = {
+  Lithuania:"🇱🇹", UK:"🇬🇧", Australia:"🇦🇺", Sweden:"🇸🇪", Germany:"🇩🇪", Canada:"🇨🇦",
+};
+const TESTIMONIALS = homePage.testimonials.items.map(t => ({
+  name: t.name,
+  country: t.country,
+  flag: TESTIMONIAL_FLAGS[t.country] || "🌍",
+  uni: t.university,
+  rating: t.rating,
+  quote: t.quote,
+  photo: t.photo,
+}));
 const AVG = ["linear-gradient(135deg,#0A1628,#1E6FD9)","linear-gradient(135deg,#B45309,#C9A84C)","linear-gradient(135deg,#065F46,#059669)","linear-gradient(135deg,#6D28D9,#8B5CF6)","linear-gradient(135deg,#0E7490,#06B6D4)","linear-gradient(135deg,#9D174D,#EC4899)"];
 
 /* ─── FAQ ─── */
@@ -276,9 +275,9 @@ export default function HomePage() {
           </div>
           <div className="ete-hero-visual reveal delay-2">
             <div className="ete-hero-card">
-              <div className="ete-hero-placeholder" style={{padding:0,overflow:"hidden",borderRadius:"inherit"}}>
+              <div className="ete-hero-placeholder" style={{position:"absolute", inset:0, padding:0, margin:0, opacity:1, overflow:"hidden", borderRadius:"inherit"}}>
                 <img
-                  src="https://easytoeurope.com/wp-content/uploads/2025/12/image-1-2.jpg"
+                  src="/images/hero/hero-main.jpg"
                   alt="Students studying abroad"
                   style={{width:"100%",height:"100%",objectFit:"cover",display:"block"}}
                 />

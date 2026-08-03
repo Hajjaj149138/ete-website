@@ -28,16 +28,18 @@ export default function Navbar() {
 
   return (
     <>
-      {/* ── Announcement bar ── */}
-      <div className="nav-ann-bar">
-        <div className="nav-ann-dot"/>
-        <span>🚀 Free Consultation Available — Expert guidance for your global journey</span>
-        <button onClick={openConsultation}>Book Now →</button>
-      </div>
+      {/* ── Sticky group: announcement bar + main header stick together ── */}
+      <div className="nav-sticky-wrap">
+        {/* ── Announcement bar ── */}
+        <div className="nav-ann-bar">
+          <div className="nav-ann-dot"/>
+          <span>🚀 Free Consultation Available — Expert guidance for your global journey</span>
+          <button onClick={openConsultation}>Book Now →</button>
+        </div>
 
-      {/* ── Main header ── */}
-      <header className={`nav-header${scrolled ? " nav-scrolled" : ""}`}>
-        <div className="ete-container nav-inner">
+        {/* ── Main header ── */}
+        <header className={`nav-header${scrolled ? " nav-scrolled" : ""}`}>
+          <div className="ete-container nav-inner">
 
           {/* Logo */}
           <Link href="/" className="nav-logo">
@@ -102,6 +104,7 @@ export default function Navbar() {
           </div>
         </div>
       </header>
+      </div>
 
       {/* ── Mobile menu ── */}
       {mobileOpen && (

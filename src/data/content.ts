@@ -92,6 +92,7 @@ export function getFlagUrl(slug: string, size: "40x30"|"80x60"|"160x120" = "80x6
 export const destinations = [
   {
     slug: "australia",
+    image: "/images/destinations/australia.jpg",
     name: "Australia",
     color: "#00843D",
     tagline: "World-class degrees with post-study work rights",
@@ -128,6 +129,7 @@ export const destinations = [
   },
   {
     slug: "sweden",
+    image: "/images/destinations/sweden.jpg",
     name: "Sweden",
     color: "#006AA7",
     tagline: "Innovation hub with 1,000+ English programs",
@@ -163,6 +165,7 @@ export const destinations = [
   },
   {
     slug: "united-kingdom",
+    image: "/images/destinations/united-kingdom.jpg",
     name: "United Kingdom",
     color: "#012169",
     tagline: "Prestigious degrees, global recognition",
@@ -198,6 +201,7 @@ export const destinations = [
   },
   {
     slug: "canada",
+    image: "/images/destinations/canada.jpg",
     name: "Canada",
     color: "#FF0000",
     tagline: "PR pathway with strong post-study work rights",
@@ -234,6 +238,7 @@ export const destinations = [
   },
   {
     slug: "hungary",
+    image: "/images/destinations/hungary.jpg",
     name: "Hungary",
     color: "#CE2939",
     tagline: "Affordable European education, Schengen access",
@@ -268,6 +273,7 @@ export const destinations = [
   },
   {
     slug: "lithuania",
+    image: "/images/destinations/lithuania.jpg",
     name: "Lithuania",
     color: "#006A44",
     tagline: "EU quality education at affordable costs",
@@ -301,6 +307,7 @@ export const destinations = [
   },
   {
     slug: "malaysia",
+    image: "/images/destinations/malaysia.jpg",
     name: "Malaysia",
     color: "#CC0001",
     tagline: "Affordable Asian hub with global university branches",
@@ -336,6 +343,7 @@ export const destinations = [
   },
   {
     slug: "austria",
+    image: "/images/destinations/austria.jpg",
     name: "Austria",
     color: "#ED2939",
     tagline: "Rich culture, high-quality education in Central Europe",
@@ -370,6 +378,7 @@ export const destinations = [
   },
   {
     slug: "denmark",
+    image: "/images/destinations/denmark.jpg",
     name: "Denmark",
     color: "#C60C30",
     tagline: "Happiest country with world-class technical education",
@@ -404,6 +413,7 @@ export const destinations = [
   },
   {
     slug: "cyprus",
+    image: "/images/destinations/cyprus.jpg",
     name: "Cyprus",
     color: "#003680",
     tagline: "Mediterranean gem with EU benefits",
@@ -437,6 +447,7 @@ export const destinations = [
   },
   {
     slug: "netherlands",
+    image: "/images/destinations/netherlands.jpg",
     name: "Netherlands",
     color: "#AE1C28",
     tagline: "2,000+ English programs in the cycling capital",
@@ -471,6 +482,7 @@ export const destinations = [
   },
   {
     slug: "malta",
+    image: "/images/destinations/malta.jpg",
     name: "Malta",
     color: "#CF142B",
     tagline: "English-speaking EU island with affordable education",
@@ -634,12 +646,12 @@ export const homePage = {
   testimonials: {
           title: "What Our Students Say",
           items: [
-            { name: "Urmi Hasan Shanta", photo: "https://easytoeurope.com/wp-content/uploads/2026/01/urmi.jpg", country: "Lithuania", university: "Mykolas Romeris University", rating: 5, quote: "Lithuania has been an amazing experience for my higher studies. Mykolas Romeris University offers a great environment and the visa process was seamless." },
-            { name: "Ferdous Woahid Raz", photo: "https://easytoeurope.com/wp-content/uploads/2026/01/ferdous.jpg", country: "UK", university: "Cardiff Metropolitan University", rating: 5, quote: "The mock interviews helped me build confidence for Cardiff Metropolitan University. The team's professional support made my UK dream come true." },
-            { name: "Ahsanul Islam", photo: "https://easytoeurope.com/wp-content/uploads/2026/01/ahsanul.jpg", country: "Australia", university: "ASA Institute", rating: 5, quote: "Studying in Australia was a big decision. ASA Institute's curriculum is top-notch, and the guidance I received for my visa was exceptional." },
-            { name: "Miskatul Islam", photo: "https://easytoeurope.com/wp-content/uploads/2026/01/miskatul.jpg", country: "Sweden", university: "Uppsala University", rating: 5, quote: "Sweden offers world-class education with great innovation. The English-taught programs and student-friendly environment are truly impressive." },
-            { name: "Tanvir Ahmed", photo: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=120&q=80&auto=format&fit=crop&crop=face", country: "Germany", university: "TU Berlin", rating: 5, quote: "The Opportunity Card guidance was incredibly detailed. They helped me score 8 points and get my visa approved quickly." },
-            { name: "Rafiq Hossain", photo: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=120&q=80&auto=format&fit=crop&crop=face", country: "Canada", university: "University of Toronto", rating: 5, quote: "Professional, transparent, and genuinely caring. My PGWP and PR pathway planning was done perfectly." },
+            { name: "Urmi Hasan Shanta", photo: "/images/testimonials/urmi-hasan-shanta.jpg", country: "Lithuania", university: "Mykolas Romeris University", rating: 5, quote: "Lithuania has been an amazing experience for my higher studies. Mykolas Romeris University offers a great environment and the visa process was seamless." },
+            { name: "Ferdous Woahid Raz", photo: "/images/testimonials/ferdous-woahid-raz.jpg", country: "UK", university: "Cardiff Metropolitan University", rating: 5, quote: "The mock interviews helped me build confidence for Cardiff Metropolitan University. The team's professional support made my UK dream come true." },
+            { name: "Ahsanul Islam", photo: "/images/testimonials/ahsanul-islam.jpg", country: "Australia", university: "ASA Institute", rating: 5, quote: "Studying in Australia was a big decision. ASA Institute's curriculum is top-notch, and the guidance I received for my visa was exceptional." },
+            { name: "Miskatul Islam", photo: "/images/testimonials/miskatul-islam.jpg", country: "Sweden", university: "Uppsala University", rating: 5, quote: "Sweden offers world-class education with great innovation. The English-taught programs and student-friendly environment are truly impressive." },
+            { name: "Tanvir Ahmed", photo: "/images/testimonials/tanvir-ahmed.jpg", country: "Germany", university: "TU Berlin", rating: 5, quote: "The Opportunity Card guidance was incredibly detailed. They helped me score 8 points and get my visa approved quickly." },
+            { name: "Rafiq Hossain", photo: "/images/testimonials/rafiq-hossain.jpg", country: "Canada", university: "University of Toronto", rating: 5, quote: "Professional, transparent, and genuinely caring. My PGWP and PR pathway planning was done perfectly." },
           ],
           },
 };
@@ -701,10 +713,14 @@ export const aboutData = {
     ],
   },
   leadership: [
-    { name: "Md Zahid Hasan",      photo: "https://easytoeurope.com/wp-content/uploads/2026/01/Sakib_Vai.jpg", role: "Chief Executive Officer", years: "5+", quote: "Our goal is to redefine international education consultancy by prioritizing transparency. We build futures, not just process visas, ensuring every student finds their path to success in 12+ premium global destinations.", linkedin: "https://www.linkedin.com/in/md-zahid-hasan-259195aa/?originalSubdomain=bd" },
-    { name: "Sadman Sakib Prottoy",photo: "https://easytoeurope.com/wp-content/uploads/2026/01/prottoy-Vaia.jpg", role: "Managing Director",       years: "3+", quote: "Strategic growth and global partnerships for top-tier access to global universities.", linkedin: "https://www.linkedin.com/in/sadman105/" },
-    { name: "Nadeem Shawon",       photo: "https://easytoeurope.com/wp-content/uploads/2026/01/nadim.jpg", role: "Marketing Director",      years: "3+", quote: "Connecting students with their dream destinations through clear and ethical communication.", linkedin: "https://www.linkedin.com/in/nadeem-shawon-8313b41aa/" },
+    { name: "Md Zahid Hasan",      photo: "/images/team/leadership/md-zahid-hasan.jpg", role: "Chief Executive Officer", years: "5+", quote: "Our goal is to redefine international education consultancy by prioritizing transparency. We build futures, not just process visas, ensuring every student finds their path to success in 12+ premium global destinations.", linkedin: "https://www.linkedin.com/in/md-zahid-hasan-259195aa/?originalSubdomain=bd" },
+    { name: "Sadman Sakib Prottoy",photo: "/images/team/leadership/sadman-sakib-prottoy.jpg", role: "Managing Director",       years: "3+", quote: "Strategic growth and global partnerships for top-tier access to global universities.", linkedin: "https://www.linkedin.com/in/sadman105/" },
+    { name: "Nadeem Shawon",       photo: "/images/team/leadership/nadeem-shawon.jpg", role: "Marketing Director",      years: "3+", quote: "Connecting students with their dream destinations through clear and ethical communication.", linkedin: "https://www.linkedin.com/in/nadeem-shawon-8313b41aa/" },
   ],
+  // To add a photo for any team member below, add a `photo:` field
+  // pointing to a local file, e.g. photo: "/images/team/staff/jamal.jpg"
+  // then put that image inside public/images/team/staff/
+  // (without a photo, the site shows a nice initials avatar instead).
   team: [
     { name: "Mr. Jamal",         role: "Lead Consultant",                  nickname: "The Genie",    trait: "Wisdom & Warmth" },
     { name: "Rubayet",           role: "Manager / HR & Admin",             nickname: "Mufasa",       trait: "Steady Support" },
@@ -757,7 +773,7 @@ export const events: Event[] = [
     endDate:     "2026-09-15T14:00",
     registrationLink: "#",
     featured:    true,
-    image:       "https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=800&q=80&auto=format&fit=crop",
+    image:       "/images/events/evt-001.jpg",
   },
   {
     id:          "evt-002",
@@ -769,7 +785,7 @@ export const events: Event[] = [
     endDate:     "2026-09-22T20:00",
     registrationLink: "#",
     featured:    false,
-    image:       "https://images.unsplash.com/photo-1527689368864-3a821dbccc34?w=800&q=80&auto=format&fit=crop",
+    image:       "/images/events/evt-002.jpg",
   },
   {
     id:          "evt-003",
@@ -781,7 +797,7 @@ export const events: Event[] = [
     endDate:     "2026-10-05T14:00",
     registrationLink: "#",
     featured:    false,
-    image:       "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80&auto=format&fit=crop",
+    image:       "/images/events/evt-003.jpg",
   },
   {
     id:          "evt-004",
@@ -793,7 +809,7 @@ export const events: Event[] = [
     endDate:     "2026-10-18T17:30",
     registrationLink: "#",
     featured:    false,
-    image:       "https://images.unsplash.com/photo-1486325212027-8081e485255e?w=800&q=80&auto=format&fit=crop",
+    image:       "/images/events/evt-004.jpg",
   },
   {
     id:          "evt-005",
@@ -805,7 +821,7 @@ export const events: Event[] = [
     endDate:     "2026-11-08T19:00",
     registrationLink: "#",
     featured:    false,
-    image:       "https://images.unsplash.com/photo-1517935706615-2717063c2225?w=800&q=80&auto=format&fit=crop",
+    image:       "/images/events/evt-005.jpg",
   },
 ];
 

@@ -10,6 +10,7 @@ import {
 import { homePage, destinations, siteConfig, events, getFlagUrl } from "@/data/content";
 import ConsultationButton from "@/components/ui/ConsultationButton";
 import EventsPublicSection from "@/components/ui/EventsPublicSection";
+import { handleLogoError } from "@/lib/logoFallback";
 
 const WHY_ICONS: Record<string, React.ElementType> = {
   ShieldCheck, GraduationCap, FileText, TrendingUp, Users, BadgeCheck,
@@ -516,6 +517,9 @@ export default function HomePage() {
             <span className="ete-tag">🏛️ Our Network</span>
             <h2 className="ete-sec-title">200+ Partner <span>Universities</span></h2>
             <p className="ete-sec-sub">We have direct partnerships with leading universities across Europe, UK, Canada, Australia & Asia.</p>
+            <Link href="/partner-universities" className="uni-carousel-view-all">
+              View All Partner Universities <ArrowRight size={13}/>
+            </Link>
           </div>
           <div className="uni-carousel-wrap">
             <div className="uni-carousel-track uni-track-1">
@@ -542,7 +546,7 @@ export default function HomePage() {
               ]).map((u,i) => (
                 <div key={i} className="uni-card">
                   <div className="uni-card-logo-wrap">
-                    <img src={u.logo} alt={u.name} className="uni-card-logo" onError={(e)=>{(e.target as HTMLImageElement).style.display="none";}}/>
+                    <img src={u.logo} alt={u.name} className="uni-card-logo" onError={(e)=>handleLogoError(e,u.name)}/>
                   </div>
                   <div className="uni-card-name">{u.name}</div>
                   <div className="uni-card-country">{u.country}</div>
@@ -575,7 +579,7 @@ export default function HomePage() {
               ]).map((u,i) => (
                 <div key={i} className="uni-card">
                   <div className="uni-card-logo-wrap">
-                    <img src={u.logo} alt={u.name} className="uni-card-logo" onError={(e)=>{(e.target as HTMLImageElement).style.display="none";}}/>
+                    <img src={u.logo} alt={u.name} className="uni-card-logo" onError={(e)=>handleLogoError(e,u.name)}/>
                   </div>
                   <div className="uni-card-name">{u.name}</div>
                   <div className="uni-card-country">{u.country}</div>
@@ -589,7 +593,10 @@ export default function HomePage() {
       {/* 12. CTA */}
       <section className="ete-cta-section">
         <div className="ete-container ete-center" style={{position:"relative",zIndex:2}}>
-          <div className="ete-cta-flags">{["🇸🇪","🇦🇺","🇬🇧","🇩🇪","🇨🇦","🇳🇱"].map(f=><span key={f} style={{fontSize:"1.4rem"}}>{f}</span>)}</div>
+          <div className="ete-cta-flags">{["se","au","gb","de","ca","nl"].map(f=>
+            <img key={f} src={`https://flagcdn.com/24x18/${f}.png`} width={24} height={18} alt={f}
+              style={{borderRadius:3,boxShadow:"0 2px 6px rgba(0,0,0,.35)"}} loading="lazy"/>
+          )}</div>
           <h2 className="ete-cta-title">Ready to Begin Your Study Abroad Journey?</h2>
           <p className="ete-cta-sub">Join 1,000+ students who trusted Easy To Europe. Expert guidance from first enquiry to landing day.</p>
           <div className="ete-cta-btns">

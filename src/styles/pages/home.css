@@ -796,6 +796,14 @@
   overflow: hidden;
 }
 
+.uni-carousel-view-all {
+  display: inline-flex; align-items: center; gap: 6px; margin-top: 14px;
+  font-size: .78rem; font-weight: 700; color: var(--brand);
+  padding: 9px 18px; border-radius: 999px; border: 1px solid var(--border-md);
+  transition: all .2s ease;
+}
+.uni-carousel-view-all:hover { background: var(--gold-soft); border-color: var(--gold-border); color: var(--gold); gap: 9px; }
+
 .uni-carousel-wrap {
   overflow: hidden;
   mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);

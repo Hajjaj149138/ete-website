@@ -2,7 +2,8 @@
 //  EASY TO EUROPE — CONTENT
 //  Edit this file to update ALL website content.
 //  Sections: siteConfig, navLinks, destinations, careerPathways,
-//            homePage, servicesPage, aboutPage, contactPage, events
+//            homePage, servicesPage, aboutPage, contactPage, events,
+//            partnerUniversities
 // ================================================================
 
 // ── Site Config ──────────────────────────────────────────────────
@@ -69,6 +70,7 @@ export const navLinks = [
       { label: "Cyprus Work",              href: "/career-pathways/cyprus-work" },
     ],
   },
+  { label: "Universities",  href: "/partner-universities" },
   { label: "Our Services", href: "/services" },
   { label: "About Us",     href: "/about" },
   { label: "Contact Us",   href: "/contact" },
@@ -837,3 +839,204 @@ export interface Event {
   featured:         boolean;
   image?:           string;
 }
+
+// ── Partner Universities (for the dedicated /partner-universities page) ──
+// Grouped by country. To add a university: find its country group below
+// (or add a new group) and push a new object into `universities`.
+// `type` should be one of: "University" | "University Pathway" |
+// "Private College" | "Higher Education" — matching the categories used
+// across the site's "Partner Institutions" sections.
+export interface PartnerUni {
+  name:        string;
+  logo:        string;
+  type:        string;
+  website?:    string;
+  description?:string;
+}
+export interface PartnerCountryGroup {
+  country:  string;
+  flagCode: string;   // 2-letter code for flagcdn.com
+  universities: PartnerUni[];
+}
+
+export const partnerUniversities: PartnerCountryGroup[] = [
+  {
+    country: "Australia", flagCode: "au",
+    universities: [
+      { name:"University of Melbourne", type:"University", logo:"https://www.google.com/s2/favicons?domain=unimelb.edu.au&sz=128" },
+      { name:"Monash University", type:"University", logo:"https://www.google.com/s2/favicons?domain=monash.edu&sz=128" },
+      { name:"The University of Sydney", type:"University", logo:"https://www.google.com/s2/favicons?domain=sydney.edu.au&sz=128" },
+      { name:"UNSW Sydney", type:"University", logo:"https://www.google.com/s2/favicons?domain=unsw.edu.au&sz=128" },
+      { name:"Australian National University", type:"University", logo:"https://www.google.com/s2/favicons?domain=anu.edu.au&sz=128" },
+      { name:"The University of Queensland", type:"University", logo:"https://www.google.com/s2/favicons?domain=uq.edu.au&sz=128" },
+      { name:"University of Adelaide", type:"University", logo:"https://www.google.com/s2/favicons?domain=adelaide.edu.au&sz=128" },
+      { name:"University of Western Australia", type:"University", logo:"https://www.google.com/s2/favicons?domain=uwa.edu.au&sz=128" },
+      { name:"University of Technology Sydney", type:"University", logo:"https://www.google.com/s2/favicons?domain=uts.edu.au&sz=128" },
+      { name:"Macquarie University", type:"University", logo:"https://www.google.com/s2/favicons?domain=mq.edu.au&sz=128" },
+      { name:"RMIT University", type:"University", logo:"https://www.google.com/s2/favicons?domain=rmit.edu.au&sz=128" },
+      { name:"Deakin University", type:"University", logo:"https://www.google.com/s2/favicons?domain=deakin.edu.au&sz=128" },
+      { name:"Griffith University", type:"University", logo:"https://www.google.com/s2/favicons?domain=griffith.edu.au&sz=128" },
+      { name:"Curtin University", type:"University", logo:"https://www.google.com/s2/favicons?domain=curtin.edu.au&sz=128" },
+      { name:"La Trobe University", type:"University", logo:"https://www.google.com/s2/favicons?domain=latrobe.edu.au&sz=128" },
+    ],
+  },
+  {
+    country: "Canada", flagCode: "ca",
+    universities: [
+      { name:"University of Toronto", type:"University", logo:"https://www.google.com/s2/favicons?domain=utoronto.ca&sz=128" },
+      { name:"University of British Columbia", type:"University", logo:"https://www.google.com/s2/favicons?domain=ubc.ca&sz=128" },
+      { name:"McGill University", type:"University", logo:"https://www.google.com/s2/favicons?domain=mcgill.ca&sz=128" },
+      { name:"University of Alberta", type:"University", logo:"https://www.google.com/s2/favicons?domain=ualberta.ca&sz=128" },
+      { name:"McMaster University", type:"University", logo:"https://www.google.com/s2/favicons?domain=mcmaster.ca&sz=128" },
+      { name:"University of Waterloo", type:"University", logo:"https://www.google.com/s2/favicons?domain=uwaterloo.ca&sz=128" },
+      { name:"Western University", type:"University", logo:"https://www.google.com/s2/favicons?domain=uwo.ca&sz=128" },
+      { name:"Queen's University", type:"University", logo:"https://www.google.com/s2/favicons?domain=queensu.ca&sz=128" },
+      { name:"University of Calgary", type:"University", logo:"https://www.google.com/s2/favicons?domain=ucalgary.ca&sz=128" },
+      { name:"Simon Fraser University", type:"University", logo:"https://www.google.com/s2/favicons?domain=sfu.ca&sz=128" },
+      { name:"York University", type:"University", logo:"https://www.google.com/s2/favicons?domain=yorku.ca&sz=128" },
+      { name:"University of Ottawa", type:"University", logo:"https://www.google.com/s2/favicons?domain=uottawa.ca&sz=128" },
+      { name:"Concordia University", type:"University", logo:"https://www.google.com/s2/favicons?domain=concordia.ca&sz=128" },
+      { name:"Toronto Metropolitan University", type:"University", logo:"https://www.google.com/s2/favicons?domain=torontomu.ca&sz=128" },
+      { name:"Dalhousie University", type:"University", logo:"https://www.google.com/s2/favicons?domain=dal.ca&sz=128" },
+    ],
+  },
+  {
+    country: "United Kingdom", flagCode: "gb",
+    universities: [
+      { name:"University of Oxford", type:"University", logo:"https://www.google.com/s2/favicons?domain=ox.ac.uk&sz=128" },
+      { name:"University of Cambridge", type:"University", logo:"https://www.google.com/s2/favicons?domain=cam.ac.uk&sz=128" },
+      { name:"Imperial College London", type:"University", logo:"https://www.google.com/s2/favicons?domain=imperial.ac.uk&sz=128" },
+      { name:"UCL", type:"University", logo:"https://www.google.com/s2/favicons?domain=ucl.ac.uk&sz=128" },
+      { name:"King's College London", type:"University", logo:"https://www.google.com/s2/favicons?domain=kcl.ac.uk&sz=128" },
+      { name:"University of Edinburgh", type:"University", logo:"https://www.google.com/s2/favicons?domain=ed.ac.uk&sz=128" },
+      { name:"University of Manchester", type:"University", logo:"https://www.google.com/s2/favicons?domain=manchester.ac.uk&sz=128" },
+      { name:"University of Bristol", type:"University", logo:"https://www.google.com/s2/favicons?domain=bristol.ac.uk&sz=128" },
+      { name:"University of Glasgow", type:"University", logo:"https://www.google.com/s2/favicons?domain=gla.ac.uk&sz=128" },
+      { name:"University of Birmingham", type:"University", logo:"https://www.google.com/s2/favicons?domain=birmingham.ac.uk&sz=128" },
+      { name:"University of Leeds", type:"University", logo:"https://www.google.com/s2/favicons?domain=leeds.ac.uk&sz=128" },
+      { name:"University of Sheffield", type:"University", logo:"https://www.google.com/s2/favicons?domain=sheffield.ac.uk&sz=128" },
+      { name:"University of Warwick", type:"University", logo:"https://www.google.com/s2/favicons?domain=warwick.ac.uk&sz=128" },
+      { name:"University of Southampton", type:"University", logo:"https://www.google.com/s2/favicons?domain=southampton.ac.uk&sz=128" },
+      { name:"Durham University", type:"University", logo:"https://www.google.com/s2/favicons?domain=durham.ac.uk&sz=128" },
+      { name:"Queen Mary University of London", type:"University", logo:"https://www.google.com/s2/favicons?domain=qmul.ac.uk&sz=128" },
+      { name:"Newcastle University", type:"University", logo:"https://www.google.com/s2/favicons?domain=ncl.ac.uk&sz=128" },
+      { name:"University of Nottingham", type:"University", logo:"https://www.google.com/s2/favicons?domain=nottingham.ac.uk&sz=128" },
+      { name:"Lancaster University", type:"University", logo:"https://www.google.com/s2/favicons?domain=lancaster.ac.uk&sz=128" },
+      { name:"University of Exeter", type:"University", logo:"https://www.google.com/s2/favicons?domain=exeter.ac.uk&sz=128" },
+    ],
+  },
+  {
+    country: "Sweden", flagCode: "se",
+    universities: [
+      { name:"KTH Royal Institute of Technology", type:"University", logo:"https://www.google.com/s2/favicons?domain=kth.se&sz=128" },
+      { name:"Lund University", type:"University", logo:"https://www.google.com/s2/favicons?domain=lu.se&sz=128" },
+      { name:"Uppsala University", type:"University", logo:"https://www.google.com/s2/favicons?domain=uu.se&sz=128" },
+      { name:"Stockholm University", type:"University", logo:"https://www.google.com/s2/favicons?domain=su.se&sz=128" },
+      { name:"Chalmers University of Technology", type:"University", logo:"https://www.google.com/s2/favicons?domain=chalmers.se&sz=128" },
+      { name:"Linköping University", type:"University", logo:"https://www.google.com/s2/favicons?domain=liu.se&sz=128" },
+      { name:"Umeå University", type:"University", logo:"https://www.google.com/s2/favicons?domain=umu.se&sz=128" },
+      { name:"University of Gothenburg", type:"University", logo:"https://www.google.com/s2/favicons?domain=gu.se&sz=128" },
+      { name:"Örebro University", type:"University", logo:"https://www.google.com/s2/favicons?domain=oru.se&sz=128" },
+      { name:"Karlstad University", type:"University", logo:"https://www.google.com/s2/favicons?domain=kau.se&sz=128" },
+    ],
+  },
+  {
+    country: "Netherlands", flagCode: "nl",
+    universities: [
+      { name:"Delft University of Technology", type:"University", logo:"https://www.google.com/s2/favicons?domain=tudelft.nl&sz=128" },
+      { name:"University of Amsterdam", type:"University", logo:"https://www.google.com/s2/favicons?domain=uva.nl&sz=128" },
+      { name:"Utrecht University", type:"University", logo:"https://www.google.com/s2/favicons?domain=uu.nl&sz=128" },
+      { name:"Leiden University", type:"University", logo:"https://www.google.com/s2/favicons?domain=universiteitleiden.nl&sz=128" },
+      { name:"Eindhoven University of Technology", type:"University", logo:"https://www.google.com/s2/favicons?domain=tue.nl&sz=128" },
+      { name:"Erasmus University Rotterdam", type:"University", logo:"https://www.google.com/s2/favicons?domain=eur.nl&sz=128" },
+      { name:"Wageningen University", type:"University", logo:"https://www.google.com/s2/favicons?domain=wur.nl&sz=128" },
+      { name:"Maastricht University", type:"University", logo:"https://www.google.com/s2/favicons?domain=maastrichtuniversity.nl&sz=128" },
+      { name:"Radboud University", type:"University", logo:"https://www.google.com/s2/favicons?domain=ru.nl&sz=128" },
+      { name:"Vrije Universiteit Amsterdam", type:"University", logo:"https://www.google.com/s2/favicons?domain=vu.nl&sz=128" },
+    ],
+  },
+  {
+    country: "Denmark", flagCode: "dk",
+    universities: [
+      { name:"University of Copenhagen", type:"University", logo:"https://www.google.com/s2/favicons?domain=ku.dk&sz=128" },
+      { name:"Aarhus University", type:"University", logo:"https://www.google.com/s2/favicons?domain=au.dk&sz=128" },
+      { name:"Technical University of Denmark", type:"University", logo:"https://www.google.com/s2/favicons?domain=dtu.dk&sz=128" },
+      { name:"Aalborg University", type:"University", logo:"https://www.google.com/s2/favicons?domain=aau.dk&sz=128" },
+      { name:"University of Southern Denmark", type:"University", logo:"https://www.google.com/s2/favicons?domain=sdu.dk&sz=128" },
+      { name:"Copenhagen Business School", type:"University", logo:"https://www.google.com/s2/favicons?domain=cbs.dk&sz=128" },
+      { name:"Roskilde University", type:"University", logo:"https://www.google.com/s2/favicons?domain=ruc.dk&sz=128" },
+      { name:"IT University of Copenhagen", type:"University", logo:"https://www.google.com/s2/favicons?domain=itu.dk&sz=128" },
+    ],
+  },
+  {
+    country: "Austria", flagCode: "at",
+    universities: [
+      { name:"University of Vienna", type:"University", logo:"https://www.google.com/s2/favicons?domain=univie.ac.at&sz=128" },
+      { name:"TU Wien", type:"University", logo:"https://www.google.com/s2/favicons?domain=tuwien.at&sz=128" },
+      { name:"Graz University of Technology", type:"University", logo:"https://www.google.com/s2/favicons?domain=tugraz.at&sz=128" },
+      { name:"University of Innsbruck", type:"University", logo:"https://www.google.com/s2/favicons?domain=uibk.ac.at&sz=128" },
+      { name:"Johannes Kepler University Linz", type:"University", logo:"https://www.google.com/s2/favicons?domain=jku.at&sz=128" },
+      { name:"Medical University of Vienna", type:"University", logo:"https://www.google.com/s2/favicons?domain=meduniwien.ac.at&sz=128" },
+      { name:"WU Vienna", type:"University", logo:"https://www.google.com/s2/favicons?domain=wu.ac.at&sz=128" },
+    ],
+  },
+  {
+    country: "Hungary", flagCode: "hu",
+    universities: [
+      { name:"Eötvös Loránd University", type:"University", logo:"https://www.google.com/s2/favicons?domain=elte.hu&sz=128" },
+      { name:"University of Debrecen", type:"University", logo:"https://www.google.com/s2/favicons?domain=unideb.hu&sz=128" },
+      { name:"University of Szeged", type:"University", logo:"https://www.google.com/s2/favicons?domain=u-szeged.hu&sz=128" },
+      { name:"Budapest University of Technology and Economics", type:"University", logo:"https://www.google.com/s2/favicons?domain=bme.hu&sz=128" },
+      { name:"Semmelweis University", type:"University", logo:"https://www.google.com/s2/favicons?domain=semmelweis.hu&sz=128" },
+      { name:"Corvinus University", type:"University", logo:"https://www.google.com/s2/favicons?domain=uni-corvinus.hu&sz=128" },
+      { name:"University of Pécs", type:"University", logo:"https://www.google.com/s2/favicons?domain=pte.hu&sz=128" },
+      { name:"Óbuda University", type:"University", logo:"https://www.google.com/s2/favicons?domain=uni-obuda.hu&sz=128" },
+    ],
+  },
+  {
+    country: "Lithuania", flagCode: "lt",
+    universities: [
+      { name:"Vilnius University", type:"University", logo:"https://www.google.com/s2/favicons?domain=vu.lt&sz=128" },
+      { name:"Kaunas University of Technology", type:"University", logo:"https://www.google.com/s2/favicons?domain=ktu.edu&sz=128" },
+      { name:"Vytautas Magnus University", type:"University", logo:"https://www.google.com/s2/favicons?domain=vdu.lt&sz=128" },
+      { name:"Vilnius Gediminas Technical University", type:"University", logo:"https://www.google.com/s2/favicons?domain=vilniustech.lt&sz=128" },
+      { name:"Lithuanian University of Health Sciences", type:"University", logo:"https://www.google.com/s2/favicons?domain=lsmuni.lt&sz=128" },
+      { name:"Klaipėda University", type:"University", logo:"https://www.google.com/s2/favicons?domain=ku.lt&sz=128" },
+    ],
+  },
+  {
+    country: "Malaysia", flagCode: "my",
+    universities: [
+      { name:"Universiti Malaya", type:"University", logo:"https://www.google.com/s2/favicons?domain=um.edu.my&sz=128" },
+      { name:"Universiti Putra Malaysia", type:"University", logo:"https://www.google.com/s2/favicons?domain=upm.edu.my&sz=128" },
+      { name:"Universiti Kebangsaan Malaysia", type:"University", logo:"https://www.google.com/s2/favicons?domain=ukm.edu.my&sz=128" },
+      { name:"Universiti Sains Malaysia", type:"University", logo:"https://www.google.com/s2/favicons?domain=usm.my&sz=128" },
+      { name:"Universiti Teknologi Malaysia", type:"University", logo:"https://www.google.com/s2/favicons?domain=utm.my&sz=128" },
+      { name:"Taylor's University", type:"Private College", logo:"https://www.google.com/s2/favicons?domain=taylors.edu.my&sz=128" },
+      { name:"Sunway University", type:"Private College", logo:"https://www.google.com/s2/favicons?domain=sunway.edu.my&sz=128" },
+      { name:"UCSI University", type:"Private College", logo:"https://www.google.com/s2/favicons?domain=ucsiuniversity.edu.my&sz=128" },
+      { name:"INTI International University", type:"Private College", logo:"https://www.google.com/s2/favicons?domain=newinti.edu.my&sz=128" },
+      { name:"Asia Pacific University", type:"Private College", logo:"https://www.google.com/s2/favicons?domain=apu.edu.my&sz=128" },
+    ],
+  },
+  {
+    country: "Cyprus", flagCode: "cy",
+    universities: [
+      { name:"University of Cyprus", type:"University", logo:"https://www.google.com/s2/favicons?domain=ucy.ac.cy&sz=128" },
+      { name:"Cyprus University of Technology", type:"University", logo:"https://www.google.com/s2/favicons?domain=cut.ac.cy&sz=128" },
+      { name:"European University Cyprus", type:"University", logo:"https://www.google.com/s2/favicons?domain=euc.ac.cy&sz=128" },
+      { name:"University of Nicosia", type:"University", logo:"https://www.google.com/s2/favicons?domain=unic.ac.cy&sz=128" },
+      { name:"Frederick University", type:"University", logo:"https://www.google.com/s2/favicons?domain=frederick.ac.cy&sz=128" },
+    ],
+  },
+  {
+    country: "Malta", flagCode: "mt",
+    universities: [
+      { name:"University of Malta", type:"University", logo:"https://www.google.com/s2/favicons?domain=um.edu.mt&sz=128" },
+      { name:"Global College Malta", type:"Private College", logo:"https://www.google.com/s2/favicons?domain=globalcollege.mt&sz=128" },
+      { name:"American University of Malta", type:"Private College", logo:"https://www.google.com/s2/favicons?domain=aum.edu.mt&sz=128" },
+      { name:"MCAST", type:"Private College", logo:"https://www.google.com/s2/favicons?domain=mcast.edu.mt&sz=128" },
+      { name:"STC Higher Education", type:"Higher Education", logo:"https://www.google.com/s2/favicons?domain=stchighereducation.com&sz=128" },
+    ],
+  },
+];

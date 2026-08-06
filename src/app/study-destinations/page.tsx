@@ -11,6 +11,9 @@ const REGION_MAP: Record<string,string> = {
 };
 
 export default function Page() {
+  // A curated set of destination photos for the hero's postcard stack
+  const featured = ["australia", "sweden", "canada"].map(s => destinations.find(d => d.slug === s)!).filter(Boolean);
+
   return (
     <div>
       {/* ── Hero ── */}
@@ -38,27 +41,29 @@ export default function Page() {
             <ConsultationButton label="Not sure? Get free advice" variant="accent" size="lg" />
           </div>
           <div className="sd-hero-right reveal delay-2">
-            <div className="sd-globe-wrap">
-              <div className="sd-globe-ring sd-ring1"/>
-              <div className="sd-globe-ring sd-ring2"/>
-              <div className="sd-globe-ring sd-ring3"/>
-              <div className="sd-globe-center">
-                <Globe size={42} style={{color:"var(--gold)",opacity:.8}}/>
-                <div className="sd-globe-txt">12 Countries</div>
-              </div>
-              {/* Floating country dots */}
-              {[
-                {flag:"au",name:"AU",pos:"top:10%;left:12%"},
-                {flag:"se",name:"SE",pos:"top:18%;right:15%"},
-                {flag:"gb",name:"UK",pos:"top:40%;left:4%"},
-                {flag:"ca",name:"CA",pos:"bottom:28%;left:18%"},
-                {flag:"de",name:"DE",pos:"bottom:18%;right:12%"},
-                {flag:"my",name:"MY",pos:"top:55%;right:6%"},
-              ].map(({flag,name,pos},i)=>(
-                <div key={flag} className="sd-dot-pin" style={{position:"absolute",...Object.fromEntries(pos.split(";").map(p=>{const[k,v]=p.trim().split(":");return[k.trim(),v.trim()]}))}} >
-                  <img src={`https://flagcdn.com/20x15/${flag}.png`} width={20} height={15} alt={name} style={{borderRadius:3,boxShadow:"0 2px 8px rgba(0,0,0,.3)"}} loading="lazy"/>
+            <div className="sd-stack">
+              <div className="sd-orbit-ring"/>
+              {featured[0] && (
+                <div className="sd-stack-card sd-stack-c1">
+                  <img src={featured[0].image} alt={featured[0].name} loading="lazy"/>
+                  <div className="sd-stack-flag">
+                    <img src={getFlagUrl(featured[0].slug,"40x30")} alt=""/> {featured[0].name}
+                  </div>
                 </div>
-              ))}
+              )}
+              {featured[1] && (
+                <div className="sd-stack-card sd-stack-c2">
+                  <img src={featured[1].image} alt={featured[1].name} loading="lazy"/>
+                  <div className="sd-stack-flag">
+                    <img src={getFlagUrl(featured[1].slug,"40x30")} alt=""/> {featured[1].name}
+                  </div>
+                </div>
+              )}
+              {featured[2] && (
+                <div className="sd-stack-card sd-stack-c3">
+                  <img src={featured[2].image} alt={featured[2].name} loading="lazy"/>
+                </div>
+              )}
             </div>
           </div>
         </div>
@@ -77,20 +82,20 @@ export default function Page() {
             {destinations.map((dest, i) => (
               <Link key={dest.slug} href={`/study-destinations/${dest.slug}`}
                 className={`sd-card reveal delay-${(i % 4) + 1}`}>
-                {/* Color top bar */}
-                <div className="sd-card-bar" style={{background:dest.color}}/>
-                <div className="sd-card-overlay"/>
-                {/* Flag + region */}
-                <div className="sd-card-head">
-                  <div className="sd-card-flag-wrap" style={{background:`${dest.color}15`,border:`1px solid ${dest.color}28`}}>
-                    <img src={getFlagUrl(dest.slug,"160x120")} width={64} height={48} alt={dest.name}
-                      className="sd-card-flag" loading="lazy"/>
-                  </div>
+                {/* Photo */}
+                <div className="sd-card-photo">
+                  <img src={dest.image} alt={dest.name} loading="lazy"/>
+                  <div className="sd-card-photo-scrim"/>
                   <div className="sd-card-region">{REGION_MAP[dest.slug]||"Europe"}</div>
+                  <div className="sd-card-flag-chip">
+                    <img src={getFlagUrl(dest.slug,"40x30")} alt={dest.name} loading="lazy"/>
+                  </div>
+                  <div className="sd-card-name-onphoto">{dest.name}</div>
                 </div>
+                {/* Ticket perforation */}
+                <div className="sd-card-perf"/>
                 {/* Info */}
                 <div className="sd-card-body">
-                  <h3 className="sd-card-name">{dest.name}</h3>
                   <p className="sd-card-tag">{dest.tagline}</p>
                   {/* Stats row */}
                   <div className="sd-card-stats">

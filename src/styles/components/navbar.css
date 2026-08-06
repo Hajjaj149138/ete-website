@@ -8,7 +8,7 @@
   background: linear-gradient(90deg, #B8860B 0%, #C9A84C 40%, #E8C96A 60%, #C9A84C 100%);
   color: #0A1628;
   font-size: .62rem; font-weight: 600;
-  padding: 4px 1rem; text-align: center; flex-wrap: wrap;
+  padding: 2px 1rem; text-align: center; flex-wrap: wrap;
   letter-spacing: .01em;
   border-bottom: 1px solid rgba(0,0,0,.15);
 }

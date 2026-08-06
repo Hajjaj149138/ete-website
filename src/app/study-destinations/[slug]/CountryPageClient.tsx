@@ -7,8 +7,9 @@ import {
   CalendarDays, CheckCircle, ChevronDown, GraduationCap,
   Briefcase, Globe, MessageCircle, Star, MapPin,
 } from "lucide-react";
-import { destinations, getFlagUrl, siteConfig } from "@/data/content";
+import { destinations, getFlagUrl, siteConfig, partnerUniversities, FLAG_CODES } from "@/data/content";
 import ConsultationButton from "@/components/ui/ConsultationButton";
+import { handleLogoError } from "@/lib/logoFallback";
 
 /* ─── Hero images per country ────────────────────────────────── */
 /* Now sourced from each destination's `image` field in
@@ -331,20 +332,31 @@ const WHY_ETE = [
   {i:"✈️", t:"Pre-Departure Care",   d:"Travel planning, accommodation search and arrival day support."},
 ];
 
+// The 4 institution categories shown on every country page — fixed
+// structure so new partner institutions can be added later (in
+// content.ts → partnerUniversities) without touching this page.
+const PI_CATEGORIES = [
+  { type: "University",         icon: "🏛️", label: "Universities" },
+  { type: "University Pathway", icon: "🛤️", label: "University Pathways" },
+  { type: "Private College",    icon: "🏫", label: "Private Colleges" },
+  { type: "Higher Education",   icon: "📖", label: "Higher Education" },
+];
+
 const TOC_ITEMS = [
   {id:"overview",      num:"01", icon:"🌍", label:"Overview"},
   {id:"why-study",     num:"02", icon:"⭐", label:"Why Study"},
   {id:"cities",        num:"03", icon:"🏙️", label:"Top Cities"},
   {id:"courses",       num:"04", icon:"📚", label:"Courses"},
   {id:"universities",  num:"05", icon:"🏛️", label:"Universities"},
-  {id:"programs",      num:"06", icon:"🎓", label:"Programs"},
-  {id:"intakes",       num:"07", icon:"📅", label:"Intakes"},
-  {id:"requirements",  num:"08", icon:"📋", label:"Requirements"},
-  {id:"cost",          num:"09", icon:"💰", label:"Cost"},
-  {id:"work-visa",     num:"10", icon:"💼", label:"Work & Visa"},
-  {id:"scholarships",  num:"11", icon:"🏆", label:"Scholarships"},
-  {id:"why-ete",       num:"12", icon:"🤝", label:"Why ETE"},
-  {id:"faq",           num:"13", icon:"❓", label:"FAQ"},
+  {id:"partner-institutions", num:"06", icon:"🎖️", label:"Partner Institutions"},
+  {id:"programs",      num:"07", icon:"🎓", label:"Programs"},
+  {id:"intakes",       num:"08", icon:"📅", label:"Intakes"},
+  {id:"requirements",  num:"09", icon:"📋", label:"Requirements"},
+  {id:"cost",          num:"10", icon:"💰", label:"Cost"},
+  {id:"work-visa",     num:"11", icon:"💼", label:"Work & Visa"},
+  {id:"scholarships",  num:"12", icon:"🏆", label:"Scholarships"},
+  {id:"why-ete",       num:"13", icon:"🤝", label:"Why ETE"},
+  {id:"faq",           num:"14", icon:"❓", label:"FAQ"},
 ];
 
 /* ══════════════════════════════════════════════════════════════ */
@@ -352,6 +364,7 @@ export default function CountryPageClient() {
   const { slug } = useParams() as { slug: string };
   const dest      = destinations.find(d => d.slug === slug);
   const ex        = EXTRA[slug];
+  const piGroup   = partnerUniversities.find(g => g.flagCode === FLAG_CODES[slug]);
   const [activeSection, setActiveSection] = useState("overview");
   const [openFaq,        setOpenFaq]      = useState<number|null>(null);
   const sectionRefs = useRef<Record<string, HTMLElement|null>>({});
@@ -390,20 +403,16 @@ export default function CountryPageClient() {
     <div className="cp-page-root">
 
       {/* ══ HERO ══ */}
-      <section className="cp-hero-v2" style={{backgroundImage:`url(${HERO_IMG[slug] || "/images/destinations/default.jpg"})`}}>
-        <div className="cp-hero-overlay"/>
-        <div className="cp-hero-color-tint" style={{background:`${dest.color}44`}}/>
-        <div className="cp-hero-texture"/>
+      <section className="cp-hero-v2">
+        <div className="cp-hero-v2-noise"/>
         <div className="container-xl">
           <Link href="/study-destinations" className="cp-back-btn-v2">
             <ArrowLeft size={13}/> All Destinations
           </Link>
-          <div className="cp-hero-body">
-            {/* Left */}
+
+          <div className="cp-hero-grid">
+            {/* Left: text */}
             <div className="cp-hero-left">
-              <div className="cp-hero-flag-wrap">
-                <img src={getFlagUrl(slug, "160x120")} width={80} height={60} alt={dest.name} className="cp-hero-flag-img"/>
-              </div>
               <div className="cp-hero-eyebrow">Study Abroad Guide</div>
               <h1 className="cp-hero-h1">Study in <span style={{color: dest.color === "#FFFFFF" ? "#FFD700" : dest.color}}>{dest.name}</span></h1>
               <p className="cp-hero-desc">{dest.tagline}</p>
@@ -430,29 +439,42 @@ export default function CountryPageClient() {
                 </a>
               </div>
             </div>
-            {/* Right: Quick Facts Card */}
-            <div className="cp-hero-facts-card">
-              <div className="cp-hero-facts-head">
-                <span>📊 Quick Facts</span>
-                <img src={getFlagUrl(slug,"40x30")} width={22} height={16} alt={dest.name} style={{borderRadius:3}}/>
+
+            {/* Right: framed photo */}
+            <div className="cp-hero-photo-wrap">
+              <div className="cp-hero-photo-frame">
+                <img src={HERO_IMG[slug] || "/images/destinations/default.jpg"} alt={dest.name}/>
               </div>
-              {[
-                {icon:"💰", label:"Annual Tuition",   val: dest.tuition},
-                {icon:"🏠", label:"Monthly Living",   val: ex?.living?.total || "Contact us"},
-                {icon:"💼", label:"Work Rights",      val: ex?.workDuring?.split("·")[0]?.trim() || "Part-time allowed"},
-                {icon:"🎓", label:"Post-Study Visa",  val: ex?.postStudy?.split("—")[0]?.trim()?.split("(")[0]?.trim() || "Available"},
-                {icon:"🏛️", label:"Partner Unis",    val: dest.uniCount || "Top universities"},
-                {icon:"📅", label:"Main Intake",      val: "Sep / Jan — Feb"},
-              ].map(({icon,label,val}) => (
-                <div key={label} className="cp-facts-row">
-                  <span className="cp-facts-icon">{icon}</span>
-                  <span className="cp-facts-label">{label}</span>
-                  <span className="cp-facts-val">{val}</span>
-                </div>
-              ))}
-              <div className="cp-facts-badge" style={{background: dest.color}}>
-                <Star size={12}/> 98% Visa Success Rate at Easy To Europe
+              <div className="cp-hero-photo-corner"/>
+              <div className="cp-hero-photo-flag">
+                <img src={getFlagUrl(slug, "40x30")} alt={dest.name}/>
+                <span>{dest.name}</span>
               </div>
+            </div>
+          </div>
+
+          {/* Quick Facts — bridges the two columns */}
+          <div className="cp-hero-facts-card">
+            <div className="cp-hero-facts-head">
+              <span>📊 Quick Facts</span>
+              <img src={getFlagUrl(slug,"40x30")} width={22} height={16} alt={dest.name} style={{borderRadius:3}}/>
+            </div>
+            {[
+              {icon:"💰", label:"Annual Tuition",   val: dest.tuition},
+              {icon:"🏠", label:"Monthly Living",   val: ex?.living?.total || "Contact us"},
+              {icon:"💼", label:"Work Rights",      val: ex?.workDuring?.split("·")[0]?.trim() || "Part-time allowed"},
+              {icon:"🎓", label:"Post-Study Visa",  val: ex?.postStudy?.split("—")[0]?.trim()?.split("(")[0]?.trim() || "Available"},
+              {icon:"🏛️", label:"Partner Unis",    val: dest.uniCount || "Top universities"},
+              {icon:"📅", label:"Main Intake",      val: "Sep / Jan — Feb"},
+            ].map(({icon,label,val}) => (
+              <div key={label} className="cp-facts-row">
+                <span className="cp-facts-icon">{icon}</span>
+                <span className="cp-facts-label">{label}</span>
+                <span className="cp-facts-val">{val}</span>
+              </div>
+            ))}
+            <div className="cp-facts-badge" style={{background: dest.color}}>
+              <Star size={12}/> 98% Visa Success Rate at Easy To Europe
             </div>
           </div>
         </div>
@@ -589,9 +611,42 @@ export default function CountryPageClient() {
             </div>
           </section>
 
-          {/* 06 Programs */}
+          {/* 06 Partner Institutions — grouped by institution type */}
+          <section ref={setRef("partner-institutions")} data-sec="partner-institutions" className="cp-sec" style={{scrollMarginTop:90}}>
+            <div className="cp-sec-head"><span className="cp-sec-num">06</span><h2>Partner Institutions in {dest.name}</h2></div>
+            <div className="cp-pi-wrap">
+              {PI_CATEGORIES.map(cat => {
+                const items = piGroup?.universities.filter(u => u.type === cat.type) || [];
+                return (
+                  <div key={cat.type} className="cp-pi-group">
+                    <div className="cp-pi-group-head">
+                      <span className="cp-pi-group-icon">{cat.icon}</span>
+                      <span className="cp-pi-group-title">{cat.label}</span>
+                      {items.length > 0 && <span className="cp-pi-group-count">{items.length}</span>}
+                    </div>
+                    {items.length > 0 ? (
+                      <div className="cp-pi-items">
+                        {items.map((u,i) => (
+                          <div key={i} className="cp-pi-item">
+                            <div className="cp-pi-logo">
+                              <img src={u.logo} alt={u.name} onError={(e)=>handleLogoError(e,u.name)}/>
+                            </div>
+                            <span className="cp-pi-item-name">{u.name}</span>
+                          </div>
+                        ))}
+                      </div>
+                    ) : (
+                      <div className="cp-pi-empty">More {cat.label.toLowerCase()} coming soon</div>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          </section>
+
+          {/* 07 Programs */}
           <section ref={setRef("programs")} data-sec="programs" className="cp-sec" style={{scrollMarginTop:90}}>
-            <div className="cp-sec-head"><span className="cp-sec-num">06</span><h2>Study Programs & Levels</h2></div>
+            <div className="cp-sec-head"><span className="cp-sec-num">07</span><h2>Study Programs & Levels</h2></div>
             <div className="cp-programs-grid">
               {(ex?.programs || [{l:"Bachelor",d:"3–4 Years",i:"🎓"},{l:"Master",d:"1–2 Years",i:"📜"},{l:"PhD",d:"3–5 Years",i:"🔬"}]).map((p:any,i:number) => (
                 <div key={i} className="cp-program-card">
@@ -603,9 +658,9 @@ export default function CountryPageClient() {
             </div>
           </section>
 
-          {/* 07 Intakes */}
+          {/* 08 Intakes */}
           <section ref={setRef("intakes")} data-sec="intakes" className="cp-sec" style={{scrollMarginTop:90}}>
-            <div className="cp-sec-head"><span className="cp-sec-num">07</span><h2>Intake Periods</h2></div>
+            <div className="cp-sec-head"><span className="cp-sec-num">08</span><h2>Intake Periods</h2></div>
             <div className="cp-intakes-grid">
               {(dest.intakes as any[]).map((intake,i) => (
                 <div key={i} className="cp-intake-card" style={{borderColor:`${dest.color}30`,background:`${dest.color}06`}}>
@@ -624,9 +679,9 @@ export default function CountryPageClient() {
             </div>
           </section>
 
-          {/* 08 Requirements */}
+          {/* 09 Requirements */}
           <section ref={setRef("requirements")} data-sec="requirements" className="cp-sec" style={{scrollMarginTop:90}}>
-            <div className="cp-sec-head"><span className="cp-sec-num">08</span><h2>Entry Requirements</h2></div>
+            <div className="cp-sec-head"><span className="cp-sec-num">09</span><h2>Entry Requirements</h2></div>
             {ex?.langReq && (
               <div className="cp-table-wrap">
                 <table className="cp-table">
@@ -665,9 +720,9 @@ export default function CountryPageClient() {
             )}
           </section>
 
-          {/* 09 Cost */}
+          {/* 10 Cost */}
           <section ref={setRef("cost")} data-sec="cost" className="cp-sec" style={{scrollMarginTop:90}}>
-            <div className="cp-sec-head"><span className="cp-sec-num">09</span><h2>Cost of Study & Living</h2></div>
+            <div className="cp-sec-head"><span className="cp-sec-num">10</span><h2>Cost of Study & Living</h2></div>
             <div className="cp-cost-grid">
               <div className="cp-cost-card">
                 <div className="cp-cost-head" style={{background:`${dest.color}10`,borderColor:`${dest.color}25`}}>
@@ -691,9 +746,9 @@ export default function CountryPageClient() {
             </div>
           </section>
 
-          {/* 10 Work & Visa */}
+          {/* 11 Work & Visa */}
           <section ref={setRef("work-visa")} data-sec="work-visa" className="cp-sec" style={{scrollMarginTop:90}}>
-            <div className="cp-sec-head"><span className="cp-sec-num">10</span><h2>Work Rights & Visa Process</h2></div>
+            <div className="cp-sec-head"><span className="cp-sec-num">11</span><h2>Work Rights & Visa Process</h2></div>
             {ex && (
               <div className="cp-work-cards">
                 {[
@@ -728,10 +783,10 @@ export default function CountryPageClient() {
             </div>
           </section>
 
-          {/* 11 Scholarships */}
+          {/* 12 Scholarships */}
           <section ref={setRef("scholarships")} data-sec="scholarships" className="cp-sec" style={{scrollMarginTop:90}}>
             <div className="cp-sec-head">
-              <span className="cp-sec-num" style={{background:"rgba(234,179,8,.1)",color:"#854d0e",borderColor:"rgba(234,179,8,.25)"}}>11</span>
+              <span className="cp-sec-num" style={{background:"rgba(234,179,8,.1)",color:"#854d0e",borderColor:"rgba(234,179,8,.25)"}}>12</span>
               <h2>Scholarships & Funding</h2>
             </div>
             <div className="cp-schol-list">
@@ -747,10 +802,10 @@ export default function CountryPageClient() {
             </div>
           </section>
 
-          {/* 12 Why ETE */}
+          {/* 13 Why ETE */}
           <section ref={setRef("why-ete")} data-sec="why-ete" className="cp-sec" style={{scrollMarginTop:90}}>
             <div className="cp-sec-head">
-              <span className="cp-sec-num" style={{background:"rgba(201,168,76,.1)",color:"#92650a",borderColor:"rgba(201,168,76,.25)"}}>12</span>
+              <span className="cp-sec-num" style={{background:"rgba(201,168,76,.1)",color:"#92650a",borderColor:"rgba(201,168,76,.25)"}}>13</span>
               <h2>Why Choose Easy To Europe?</h2>
             </div>
             <div className="cp-why-grid">
@@ -764,9 +819,9 @@ export default function CountryPageClient() {
             </div>
           </section>
 
-          {/* 13 FAQ */}
+          {/* 14 FAQ */}
           <section ref={setRef("faq")} data-sec="faq" className="cp-sec" style={{scrollMarginTop:90}}>
-            <div className="cp-sec-head"><span className="cp-sec-num">13</span><h2>Frequently Asked Questions</h2></div>
+            <div className="cp-sec-head"><span className="cp-sec-num">14</span><h2>Frequently Asked Questions</h2></div>
             <div className="cp-faq-list">
               {(ex?.faqs || [
                 {q:`Is IELTS mandatory for ${dest.name}?`,  a:`IELTS ${dest.ielts.min} is the standard. ${dest.ielts.note}.`},

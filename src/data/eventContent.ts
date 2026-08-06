@@ -22,7 +22,13 @@ export const eventInfo = {
 
 // ── 12 Destinations Featured at the Summit ──────────────────────
 // slugs map to /images/destinations/<slug>.jpg and FLAG_CODES in content.ts
-export const eventCountries = [
+// hasPhoto:false → no photo file yet for that country, page shows a
+// gradient+flag fallback card instead. Drop a real photo in
+// /public/images/destinations/<slug>.jpg and flip this to true (or
+// just remove the field) to switch it to a full photo card.
+type EventCountry = { slug: string; name: string; flag: string; hasPhoto?: boolean };
+
+export const eventCountries: EventCountry[] = [
   { slug: "australia",       name: "Australia",       flag: "🇦🇺" },
   { slug: "united-kingdom",  name: "United Kingdom",  flag: "🇬🇧" },
   { slug: "canada",          name: "Canada",          flag: "🇨🇦" },
@@ -34,7 +40,7 @@ export const eventCountries = [
   { slug: "malaysia",        name: "Malaysia",         flag: "🇲🇾" },
   { slug: "austria",         name: "Austria",          flag: "🇦🇹" },
   { slug: "cyprus",          name: "Cyprus",           flag: "🇨🇾" },
-  { slug: "malta",           name: "Malta",            flag: "🇲🇹" },
+  { slug: "greece",          name: "Greece",           flag: "🇬🇷" },
 ];
 
 // ── Exclusive Event Benefits ─────────────────────────────────────

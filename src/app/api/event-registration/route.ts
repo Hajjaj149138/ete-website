@@ -34,7 +34,7 @@ import nodemailer from "nodemailer";
 /* ─── CRM Config ─────────────────────────────────────── */
 const CRM_ENDPOINT        = "https://crm.ete.sveducrm.com/api/web-form";
 const EVENT_CRM_SOURCE    = "Aug 14-15 Event"; // ⚠️ must exist as a Source in CRM
-const EVENT_CRM_SOURCE_ID = 22;                 // ⚠️ PLACEHOLDER — verify & update, see note above
+const EVENT_CRM_SOURCE_ID = 19;                 // ⚠️ PLACEHOLDER — verify & update, see note above
 
 /* ─── Email Config ───────────────────────────────────── */
 const NOTIFY_EMAIL = "info@easytoeurope.com";
@@ -54,7 +54,7 @@ const COUNTRY_IDS: Record<string, number> = {
   "Denmark":        8,
   "Cyprus":         14,
   "Netherlands":    13,
-  "Malta":          15,
+  "Greece":         30,   // ⚠️ PLACEHOLDER — verify real ID from CRM /base-filter API
 };
 
 export async function POST(req: NextRequest) {

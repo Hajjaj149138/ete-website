@@ -164,7 +164,11 @@ export default function SummitClient() {
           <div className="smt-dest-grid">
             {eventCountries.map(c => (
               <div className="smt-dest-card" key={c.slug}>
-                <img src={`/images/destinations/${c.slug}.jpg`} alt={c.name} loading="lazy" />
+                {c.hasPhoto === false ? (
+                  <div className="smt-dest-fallback"><span className="smt-dest-fallback-flag">{c.flag}</span></div>
+                ) : (
+                  <img src={`/images/destinations/${c.slug}.jpg`} alt={c.name} loading="lazy" />
+                )}
                 <div className="smt-dest-overlay" />
                 <div className="smt-dest-info">
                   <span className="smt-dest-flag">{c.flag}</span>
@@ -296,7 +300,7 @@ export default function SummitClient() {
                       <label className="ete-label">Preferred Destination</label>
                       <select className="ete-input" value={form.destination} onChange={e => set("destination", e.target.value)}>
                         <option value="">Select country</option>
-                        {eventCountries.map(c => <option key={c.slug} value={c.name}>{c.flag} {c.name}</option>)}
+                        {eventCountries.map(c => <option key={c.slug} value={c.name}>{c.name}</option>)}
                         <option value="Not sure yet">Not sure yet</option>
                       </select>
                     </div>
@@ -340,6 +344,32 @@ export default function SummitClient() {
                 </form>
               </>
             )}
+          </div>
+        </div>
+      </section>
+      {/* ══════════════ FIND US (MAP) ══════════════ */}
+      <section className="smt-map-section">
+        <div className="ete-container">
+          <div className="ete-section-hd ete-center smt-section-hd">
+            <span className="ete-tag"><MapPin size={9} /> Visit Us</span>
+            <h2 className="ete-sec-title">Find Our <span>Office</span></h2>
+          </div>
+          <div className="map2-wrap smt-map-compact">
+            <div className="map2-info">
+              <div className="map2-badge">📍 Bangladesh HQ</div>
+              <h3 className="map2-title">Easy To Europe</h3>
+              <p className="map2-addr">44, F, 08, Panthapath<br />Indira Road, Dhaka 1205</p>
+              <div className="map2-hours-row"><Calendar size={13} style={{ color: "var(--gold)", flexShrink: 0 }} /><span>Saturday – Thursday: 10AM – 6PM</span></div>
+              <div className="map2-hours-row"><Phone size={13} style={{ color: "var(--gold)", flexShrink: 0 }} /><span>{siteConfig.phone}</span></div>
+              <a href="https://maps.app.goo.gl/2Nu4jgEmukvifEHRA" target="_blank" rel="noreferrer"
+                className="ete-btn ete-btn-accent ete-btn-sm map2-dir-btn"><MapPin size={12} /> Get Directions</a>
+            </div>
+            <div className="map2-embed">
+              <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1825.9211469588893!2d90.38422720000001!3d23.753002600000002!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3755b96abb5e4a4b%3A0x795d7469614680b2!2sEasy%20To%20Europe!5e0!3m2!1sen!2sbd!4v1772869843518!5m2!1sen!2sbd"
+                width="100%" height="100%" style={{ border: 0 }} allowFullScreen loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade" title="Easy To Europe Dhaka Office" />
+            </div>
           </div>
         </div>
       </section>

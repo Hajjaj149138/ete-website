@@ -1403,7 +1403,7 @@ textarea.input{resize:vertical;min-height:90px}
 
 /* ─── STICKY TOC ─── */
 .cp-toc-bar {
-  position:sticky; top:64px; z-index:50; background:var(--bg);
+  position:sticky; top:64px; z-index:50; background:var(--bg-base);
   border-bottom:1px solid var(--border); box-shadow:0 2px 8px rgba(0,0,0,.04);
 }
 .cp-toc-inner { display:flex; overflow-x:auto; scrollbar-width:none; gap:2px; padding:0 4px }
@@ -1827,7 +1827,7 @@ textarea.input{resize:vertical;min-height:90px}
 /* ── Body Layout ── */
 .legal-body {
   padding: 4rem 0 6rem;
-  background: var(--bg);
+  background: var(--bg-base);
 }
 .legal-layout {
   display: grid;
@@ -2071,7 +2071,7 @@ textarea.input{resize:vertical;min-height:90px}
    ═══════════════════════════════════════════════════════════════ */
 
 .team-section-v2 {
-  background: var(--bg);
+  background: var(--bg-base);
 }
 
 /* Grid: 2 cols mobile → 3 tablet → 4 desktop → 5 wide */
@@ -2725,7 +2725,7 @@ html.dark .legal-hero,
    ═══════════════════════════════════════════════════════════════ */
 
 /* ── Page root ── */
-.cp-page-root { background: var(--bg); }
+.cp-page-root { background: var(--bg-base); }
 
 /* ── Hero v3 — Editorial split layout ──
    Signature: the destination photo is shown as a proper framed
@@ -2840,6 +2840,30 @@ html.dark .legal-hero,
 .cp-facts-badge {
   grid-column: 1 / -1; padding: 12px 18px; display: flex; align-items: center; justify-content: center; gap: 7px;
   font-size: .76rem; font-weight: 700; color: var(--navy);
+}
+
+/* ── Desktop-only compacting ──
+   On wide screens the hero (photo + text + facts card) was reading
+   too tall/spacious ("zoomed in") compared to the mobile stacked
+   layout, which already looks right. This tightens sizing only
+   above the 900px stack breakpoint, leaving mobile untouched. */
+@media (min-width: 901px) {
+  .cp-hero-v2 .container-xl { padding-top: 18px; }
+  .cp-hero-v2 { padding-bottom: 46px; }
+  .cp-back-btn-v2 { margin-bottom: 18px; padding: 6px 12px; }
+  .cp-hero-grid { gap: 2.3rem; }
+  .cp-hero-h1 { font-size: clamp(2rem, 3.1vw, 2.5rem); margin-bottom: 10px; }
+  .cp-hero-eyebrow { margin-bottom: 10px; }
+  .cp-hero-desc { font-size: .82rem; margin-bottom: 18px; }
+  .cp-hero-pills-row { gap: 7px; margin-bottom: 18px; }
+  .cp-hero-pill-v2 { padding: 7px 11px; }
+  .cp-hero-pill-icon { font-size: .92rem; }
+  .cp-hero-pill-val { font-size: .74rem; }
+  .cp-hero-photo-frame { aspect-ratio: 4 / 3.15; border-width: 5px; }
+  .cp-hero-photo-corner { width: 44px; height: 44px; }
+  .cp-hero-facts-card { margin-top: -34px; max-width: 560px; }
+  .cp-hero-facts-head { padding: 10px 16px; }
+  .cp-facts-row { padding: 11px 15px; }
 }
 
 
@@ -3463,18 +3487,22 @@ html.dark .legal-hero,
   font-size: .62rem; font-weight: 700; color: var(--gold); background: var(--gold-soft);
   border: 1px solid var(--gold-border); padding: 3px 10px; border-radius: 999px;
 }
-.cp-pi-items { display: flex; flex-direction: column; }
-.cp-pi-item {
-  display: flex; align-items: center; gap: 12px; padding: 12px 18px;
-  border-bottom: 1px solid var(--border);
+.cp-pi-items {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(128px, 1fr));
+  gap: 10px; padding: 16px;
 }
-.cp-pi-item:last-child { border-bottom: none; }
+.cp-pi-item {
+  display: flex; flex-direction: column; align-items: center; text-align: center; gap: 9px;
+  padding: 14px 8px; border-radius: var(--r-md); background: var(--bg-alt); border: 1px solid var(--border);
+  transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+}
+.cp-pi-item:hover { transform: translateY(-3px); box-shadow: var(--sh-sm); border-color: var(--gold-border); }
 .cp-pi-logo {
-  width: 38px; height: 38px; border-radius: 8px; background: var(--bg-alt); border: 1px solid var(--border);
+  width: 42px; height: 42px; border-radius: 8px; background: var(--bg-card); border: 1px solid var(--border);
   display: flex; align-items: center; justify-content: center; padding: 5px; flex-shrink: 0;
 }
 .cp-pi-logo img { width: 100%; height: 100%; object-fit: contain; }
-.cp-pi-item-name { font-size: .82rem; font-weight: 600; color: var(--text-primary); }
+.cp-pi-item-name { font-size: .68rem; font-weight: 600; color: var(--text-primary); line-height: 1.35; }
 .cp-pi-empty {
   padding: 18px; text-align: center; font-size: .74rem; color: var(--text-muted); font-style: italic;
 }

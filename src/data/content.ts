@@ -719,28 +719,29 @@ export const aboutData = {
     { name: "Sadman Sakib Prottoy",photo: "/images/team/leadership/sadman-sakib-prottoy.jpg", role: "Managing Director",       years: "3+", quote: "Strategic growth and global partnerships for top-tier access to global universities.", linkedin: "https://www.linkedin.com/in/sadman105/" },
     { name: "Nadeem Shawon",       photo: "/images/team/leadership/nadeem-shawon.jpg", role: "Marketing Director",      years: "3+", quote: "Connecting students with their dream destinations through clear and ethical communication.", linkedin: "https://www.linkedin.com/in/nadeem-shawon-8313b41aa/" },
   ],
-  // To add a photo for any team member below, add a `photo:` field
-  // pointing to a local file, e.g. photo: "/images/team/staff/jamal.jpg"
-  // then put that image inside public/images/team/staff/
-  // (without a photo, the site shows a nice initials avatar instead).
+  // Each member below already has a `photo:` field pointing to
+  // /public/images/team/staff/{slug}.jpg — just replace that file
+  // with a real photo (same filename) and it'll show automatically.
+  // If a photo fails to load, the site falls back to a clean
+  // initials avatar automatically — never a broken image.
   team: [
-    { name: "Mr. Jamal",         role: "Lead Consultant",                  nickname: "The Genie",    trait: "Wisdom & Warmth" },
-    { name: "Rubayet",           role: "Manager / HR & Admin",             nickname: "Mufasa",       trait: "Steady Support" },
-    { name: "Faiza",             role: "Brand Executive",                  nickname: "Minnie Mouse", trait: "Creative Energy" },
-    { name: "Prity",             role: "Europe Specialist",                nickname: "Buttercup",    trait: "Friendly Guidance" },
-    { name: "Sraboni",           role: "Senior UK Consultant",             nickname: "Moana",        trait: "Confident Mentor" },
-    { name: "Tanjina",           role: "Customer Executive",               nickname: "Snow White",   trait: "Clarity & Hope" },
-    { name: "Mehidi",            role: "Senior Advisor",                   nickname: "Yoda",         trait: "Wise Mentorship" },
-    { name: "Antara",            role: "Content Creator",                  nickname: "Ariel",        trait: "Creative Spark" },
-    { name: "Sifat",             role: "Visa Expert",                      nickname: "Aladdin",      trait: "Problem Solver" },
-    { name: "Tanny",             role: "Compliance",                       nickname: "Belle",        trait: "Clever Thinker" },
-    { name: "Asif",              role: "Researcher",                       nickname: "Sherlock",     trait: "Fact Finder" },
-    { name: "Tanim",             role: "UI/UX Designer",                   nickname: "Peter Pan",    trait: "Creative Flair" },
-    { name: "Hajjaj",            role: "IT Lead",                          nickname: "Thor",         trait: "Tech Power" },
-    { name: "Fatema Zannatee",   role: "Social Media",                     nickname: "Cinderella",   trait: "Bright Presence" },
-    { name: "Shaheli Sultana",   role: "Sr. Educational Consultant",       nickname: "",             trait: "Relationship Manager" },
-    { name: "Masuda Parvin Sraboni", role: "Senior Education Consultant",  nickname: "",             trait: "Student Champion" },
-    { name: "Tasfea Mahjabin",   role: "Education Consultant",             nickname: "Prithy",       trait: "Dedicated Guide" },
+    { name: "Mr. Jamal", photo: "/images/team/staff/jamal.jpg",         role: "Lead Consultant",                  nickname: "The Genie",    trait: "Wisdom & Warmth" },
+    { name: "Rubayet", photo: "/images/team/staff/rubayet.jpg",           role: "Manager / HR & Admin",             nickname: "Mufasa",       trait: "Steady Support" },
+    { name: "Faiza", photo: "/images/team/staff/faiza.jpg",             role: "Brand Executive",                  nickname: "Minnie Mouse", trait: "Creative Energy" },
+    { name: "Prity", photo: "/images/team/staff/prity.jpg",             role: "Europe Specialist",                nickname: "Buttercup",    trait: "Friendly Guidance" },
+    { name: "Sraboni", photo: "/images/team/staff/sraboni.jpg",           role: "Senior UK Consultant",             nickname: "Moana",        trait: "Confident Mentor" },
+    { name: "Tanjina", photo: "/images/team/staff/tanjina.jpg",           role: "Customer Executive",               nickname: "Snow White",   trait: "Clarity & Hope" },
+    { name: "Mehidi", photo: "/images/team/staff/mehidi.jpg",            role: "Senior Advisor",                   nickname: "Yoda",         trait: "Wise Mentorship" },
+    { name: "Antara", photo: "/images/team/staff/antara.jpg",            role: "Content Creator",                  nickname: "Ariel",        trait: "Creative Spark" },
+    { name: "Sifat", photo: "/images/team/staff/sifat.jpg",             role: "Visa Expert",                      nickname: "Aladdin",      trait: "Problem Solver" },
+    { name: "Tanny", photo: "/images/team/staff/tanny.jpg",             role: "Compliance",                       nickname: "Belle",        trait: "Clever Thinker" },
+    { name: "Asif", photo: "/images/team/staff/asif.jpg",              role: "Researcher",                       nickname: "Sherlock",     trait: "Fact Finder" },
+    { name: "Tanim", photo: "/images/team/staff/tanim.jpg",             role: "UI/UX Designer",                   nickname: "Peter Pan",    trait: "Creative Flair" },
+    { name: "Hajjaj", photo: "/images/team/staff/hajjaj.jpg",            role: "IT Lead",                          nickname: "Thor",         trait: "Tech Power" },
+    { name: "Fatema Zannatee", photo: "/images/team/staff/fatema-zannatee.jpg",   role: "Social Media",                     nickname: "Cinderella",   trait: "Bright Presence" },
+    { name: "Shaheli Sultana", photo: "/images/team/staff/shaheli-sultana.jpg",   role: "Sr. Educational Consultant",       nickname: "",             trait: "Relationship Manager" },
+    { name: "Masuda Parvin Sraboni", photo: "/images/team/staff/masuda-parvin-sraboni.jpg", role: "Senior Education Consultant",  nickname: "",             trait: "Student Champion" },
+    { name: "Tasfea Mahjabin", photo: "/images/team/staff/tasfea-mahjabin.jpg",   role: "Education Consultant",             nickname: "Prithy",       trait: "Dedicated Guide" },
   ],
 };
 

@@ -715,7 +715,7 @@
    ══════════════════════════════════ */
 .why-section {
   padding: 5rem 0; position: relative; overflow: hidden;
-  background: var(--bg);
+  background: var(--bg-base);
 }
 .why-bg-pattern {
   position: absolute; inset: 0; pointer-events: none; opacity: .025;
@@ -792,7 +792,7 @@
 
 .uni-carousel-section {
   padding: 4rem 0;
-  background: var(--bg);
+  background: var(--bg-base);
   overflow: hidden;
 }
 

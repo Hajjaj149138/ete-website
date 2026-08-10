@@ -300,13 +300,22 @@ export default function AboutPage() {
                     className="team-v2-photo-bg"
                     style={{ background: TEAM_GRADS[i % TEAM_GRADS.length] }}
                   >
-                    {m.photo ? (
-                      <img src={m.photo} alt={m.name} className="team-v2-photo-img" />
-                    ) : (
-                      <div className="team-v2-initials">
-                        {m.name.split(" ").map((w: string) => w[0]).join("").slice(0, 2)}
-                      </div>
+                    {m.photo && (
+                      <img
+                        src={m.photo}
+                        alt={m.name}
+                        className="team-v2-photo-img"
+                        onError={(e) => {
+                          const img = e.target as HTMLImageElement;
+                          img.style.display = "none";
+                          const fallback = img.nextElementSibling as HTMLElement | null;
+                          if (fallback) fallback.style.display = "flex";
+                        }}
+                      />
                     )}
+                    <div className="team-v2-initials" style={{ display: m.photo ? "none" : "flex" }}>
+                      {m.name.split(" ").map((w: string) => w[0]).join("").slice(0, 2)}
+                    </div>
                   </div>
 
                   {/* Nickname badge */}

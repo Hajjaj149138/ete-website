@@ -7,7 +7,7 @@ import {
   Globe, Play, ChevronDown, MapPin, ExternalLink, Calendar,
   ChevronLeft, ChevronRight, Sparkles,
 } from "lucide-react";
-import { homePage, destinations, siteConfig, events, getFlagUrl } from "@/data/content";
+import { homePage, destinations, siteConfig, events, getFlagUrl, partnerUniversities } from "@/data/content";
 import ConsultationButton from "@/components/ui/ConsultationButton";
 import EventsPublicSection from "@/components/ui/EventsPublicSection";
 import { handleLogoError } from "@/lib/logoFallback";
@@ -244,6 +244,27 @@ function FAQItem({q,a,open,onToggle,idx}:{q:string;a:string;open:boolean;onToggl
 /* ════════════════════════════════════════════
    MAIN PAGE
    ════════════════════════════════════════════ */
+/* ─── University Partners Carousel ───
+   Pulled from the same partnerUniversities data (content.ts) used by
+   the dedicated /partner-universities page and country pages — logos
+   come from Google's favicon service (stable, no hotlink-blocking),
+   so this can't go stale or break the way the old hardcoded
+   Wikipedia/Seeklogo links did. Edit content.ts, not here, to change
+   which universities appear. */
+const FLAG_EMOJI_BY_CODE: Record<string,string> = {
+  au:"🇦🇺", ca:"🇨🇦", gb:"🇬🇧", se:"🇸🇪", nl:"🇳🇱", dk:"🇩🇰",
+  at:"🇦🇹", hu:"🇭🇺", lt:"🇱🇹", my:"🇲🇾", cy:"🇨🇾", mt:"🇲🇹", de:"🇩🇪",
+};
+const CAROUSEL_ALL = partnerUniversities.flatMap(g =>
+  g.universities.map(u => ({
+    name: u.name,
+    country: `${FLAG_EMOJI_BY_CODE[g.flagCode] || "🌍"} ${g.country}`,
+    logo: u.logo,
+  }))
+);
+const CAROUSEL_ROW_1 = CAROUSEL_ALL.slice(0, 12);
+const CAROUSEL_ROW_2 = CAROUSEL_ALL.slice(12, 24);
+
 export default function HomePage() {
   const [openFaq, setOpenFaq] = useState<number|null>(null);
   const [playing, setPlaying] = useState<string|null>(null);
@@ -523,27 +544,7 @@ export default function HomePage() {
           </div>
           <div className="uni-carousel-wrap">
             <div className="uni-carousel-track uni-track-1">
-              {[
-                {name:"TU Munich",country:"🇩🇪 Germany",logo:"https://seeklogo.com/images/T/technical-university-munich-logo-386CE01E08-seeklogo.com.png"},
-                {name:"Vilnius University",country:"🇱🇹 Lithuania",logo:"https://upload.wikimedia.org/wikipedia/en/thumb/5/52/Vilnius_University_logo.svg/200px-Vilnius_University_logo.svg.png"},
-                {name:"Monash University",country:"🇦🇺 Australia",logo:"https://seeklogo.com/images/M/monash-university-logo-F1A08F4A3E-seeklogo.com.png"},
-                {name:"University of Toronto",country:"🇨🇦 Canada",logo:"https://upload.wikimedia.org/wikipedia/en/thumb/0/04/Utoronto_coa.svg/200px-Utoronto_coa.svg.png"},
-                {name:"TU Delft",country:"🇳🇱 Netherlands",logo:"https://upload.wikimedia.org/wikipedia/en/thumb/4/44/TU_Delft_Logo.svg/200px-TU_Delft_Logo.svg.png"},
-                {name:"Budapest Corvinus",country:"🇭🇺 Hungary",logo:"https://seeklogo.com/images/C/corvinus-university-budapest-logo-5D29CA93B7-seeklogo.com.png"},
-                {name:"University of Melbourne",country:"🇦🇺 Australia",logo:"https://upload.wikimedia.org/wikipedia/en/thumb/1/10/University_of_Melbourne_logo.svg/200px-University_of_Melbourne_logo.svg.png"},
-                {name:"Lund University",country:"🇸🇪 Sweden",logo:"https://upload.wikimedia.org/wikipedia/en/thumb/2/28/Lund_University_seal_2020.svg/200px-Lund_University_seal_2020.svg.png"},
-                {name:"University of Cyprus",country:"🇨🇾 Cyprus",logo:"https://upload.wikimedia.org/wikipedia/en/thumb/0/06/University_of_Cyprus_logo.svg/200px-University_of_Cyprus_logo.svg.png"},
-                {name:"Aarhus University",country:"🇩🇰 Denmark",logo:"https://seeklogo.com/images/A/aarhus-university-logo-1A9977D54A-seeklogo.com.png"},
-                {name:"University of Malta",country:"🇲🇹 Malta",logo:"https://upload.wikimedia.org/wikipedia/commons/thumb/e/ef/University_of_Malta_logo.svg/200px-University_of_Malta_logo.svg.png"},
-                {name:"Monash Malaysia",country:"🇲🇾 Malaysia",logo:"https://seeklogo.com/images/M/monash-university-logo-F1A08F4A3E-seeklogo.com.png"},
-              ].concat([
-                {name:"TU Munich",country:"🇩🇪 Germany",logo:"https://seeklogo.com/images/T/technical-university-munich-logo-386CE01E08-seeklogo.com.png"},
-                {name:"Vilnius University",country:"🇱🇹 Lithuania",logo:"https://upload.wikimedia.org/wikipedia/en/thumb/5/52/Vilnius_University_logo.svg/200px-Vilnius_University_logo.svg.png"},
-                {name:"Monash University",country:"🇦🇺 Australia",logo:"https://seeklogo.com/images/M/monash-university-logo-F1A08F4A3E-seeklogo.com.png"},
-                {name:"University of Toronto",country:"🇨🇦 Canada",logo:"https://upload.wikimedia.org/wikipedia/en/thumb/0/04/Utoronto_coa.svg/200px-Utoronto_coa.svg.png"},
-                {name:"TU Delft",country:"🇳🇱 Netherlands",logo:"https://upload.wikimedia.org/wikipedia/en/thumb/4/44/TU_Delft_Logo.svg/200px-TU_Delft_Logo.svg.png"},
-                {name:"Budapest Corvinus",country:"🇭🇺 Hungary",logo:"https://seeklogo.com/images/C/corvinus-university-budapest-logo-5D29CA93B7-seeklogo.com.png"},
-              ]).map((u,i) => (
+              {CAROUSEL_ROW_1.concat(CAROUSEL_ROW_1).map((u,i) => (
                 <div key={i} className="uni-card">
                   <div className="uni-card-logo-wrap">
                     <img src={u.logo} alt={u.name} className="uni-card-logo" onError={(e)=>handleLogoError(e,u.name)}/>
@@ -556,27 +557,7 @@ export default function HomePage() {
           </div>
           <div className="uni-carousel-wrap" style={{marginTop:"1rem"}}>
             <div className="uni-carousel-track uni-track-2">
-              {[
-                {name:"KTH Royal Institute",country:"🇸🇪 Sweden",logo:"https://upload.wikimedia.org/wikipedia/en/thumb/e/ef/KTH_Royal_Institute_of_Technology_logo_2016.svg/200px-KTH_Royal_Institute_of_Technology_logo_2016.svg.png"},
-                {name:"Erasmus University",country:"🇳🇱 Netherlands",logo:"https://seeklogo.com/images/E/erasmus-university-rotterdam-logo-5C0B62B5E2-seeklogo.com.png"},
-                {name:"McGill University",country:"🇨🇦 Canada",logo:"https://upload.wikimedia.org/wikipedia/en/thumb/d/d4/McGill_University_CoA.svg/200px-McGill_University_CoA.svg.png"},
-                {name:"Debrecen University",country:"🇭🇺 Hungary",logo:"https://upload.wikimedia.org/wikipedia/en/thumb/c/c9/University_of_Debrecen_logo.svg/200px-University_of_Debrecen_logo.svg.png"},
-                {name:"Uni of Edinburgh",country:"🇬🇧 UK",logo:"https://upload.wikimedia.org/wikipedia/en/thumb/5/5a/University_of_Edinburgh_ceremonial_roundel.svg/200px-University_of_Edinburgh_ceremonial_roundel.svg.png"},
-                {name:"UTM Malaysia",country:"🇲🇾 Malaysia",logo:"https://upload.wikimedia.org/wikipedia/commons/thumb/0/00/Logo_UTM_%28Universiti_Teknologi_Malaysia%29.svg/200px-Logo_UTM_%28Universiti_Teknologi_Malaysia%29.svg.png"},
-                {name:"UBC Vancouver",country:"🇨🇦 Canada",logo:"https://upload.wikimedia.org/wikipedia/en/thumb/a/a7/UBC_Logo_new.svg/200px-UBC_Logo_new.svg.png"},
-                {name:"Aalborg University",country:"🇩🇰 Denmark",logo:"https://seeklogo.com/images/A/aalborg-university-aau-logo-16EB9B61B5-seeklogo.com.png"},
-                {name:"Uppsala University",country:"🇸🇪 Sweden",logo:"https://upload.wikimedia.org/wikipedia/en/thumb/6/6b/Uppsala_University-logo.svg/200px-Uppsala_University-logo.svg.png"},
-                {name:"UNSW Sydney",country:"🇦🇺 Australia",logo:"https://upload.wikimedia.org/wikipedia/en/thumb/8/85/UNSW_Logo.svg/200px-UNSW_Logo.svg.png"},
-                {name:"Neapolis Uni Pafos",country:"🇨🇾 Cyprus",logo:"https://www.nup.ac.cy/wp-content/uploads/2021/04/NUP-logo.png"},
-                {name:"Taylor's University",country:"🇲🇾 Malaysia",logo:"https://upload.wikimedia.org/wikipedia/en/thumb/4/4c/Taylor%27s_University_new_logo.svg/200px-Taylor%27s_University_new_logo.svg.png"},
-              ].concat([
-                {name:"KTH Royal Institute",country:"🇸🇪 Sweden",logo:"https://upload.wikimedia.org/wikipedia/en/thumb/e/ef/KTH_Royal_Institute_of_Technology_logo_2016.svg/200px-KTH_Royal_Institute_of_Technology_logo_2016.svg.png"},
-                {name:"Erasmus University",country:"🇳🇱 Netherlands",logo:"https://seeklogo.com/images/E/erasmus-university-rotterdam-logo-5C0B62B5E2-seeklogo.com.png"},
-                {name:"McGill University",country:"🇨🇦 Canada",logo:"https://upload.wikimedia.org/wikipedia/en/thumb/d/d4/McGill_University_CoA.svg/200px-McGill_University_CoA.svg.png"},
-                {name:"Debrecen University",country:"🇭🇺 Hungary",logo:"https://upload.wikimedia.org/wikipedia/en/thumb/c/c9/University_of_Debrecen_logo.svg/200px-University_of_Debrecen_logo.svg.png"},
-                {name:"Uni of Edinburgh",country:"🇬🇧 UK",logo:"https://upload.wikimedia.org/wikipedia/en/thumb/5/5a/University_of_Edinburgh_ceremonial_roundel.svg/200px-University_of_Edinburgh_ceremonial_roundel.svg.png"},
-                {name:"UTM Malaysia",country:"🇲🇾 Malaysia",logo:"https://upload.wikimedia.org/wikipedia/commons/thumb/0/00/Logo_UTM_%28Universiti_Teknologi_Malaysia%29.svg/200px-Logo_UTM_%28Universiti_Teknologi_Malaysia%29.svg.png"},
-              ]).map((u,i) => (
+              {CAROUSEL_ROW_2.concat(CAROUSEL_ROW_2).map((u,i) => (
                 <div key={i} className="uni-card">
                   <div className="uni-card-logo-wrap">
                     <img src={u.logo} alt={u.name} className="uni-card-logo" onError={(e)=>handleLogoError(e,u.name)}/>

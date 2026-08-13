@@ -3,24 +3,24 @@
  *  FILE: src/app/api/event-registration/route.ts
  *
  *  WHAT THIS DOES:
- *  1. Receives form data from /summit-2026 (the event landing page)
- *  2. Creates a Lead in ETE CRM — SOURCE = "Aug 14-15 Event"
- *     (kept completely separate from the normal website source,
- *      so leads from this event page are always trackable in CRM)
+ *  1. Receives form data from ANY event landing page (Summit 2026,
+ *     Nordic & Baltic Expo, UK Pathways Fair, etc.)
+ *  2. Creates a Lead in ETE CRM — SOURCE = whatever that event page
+ *     sends as `eventSource` (each event's content file sets its
+ *     own crmSource, so every event is trackable separately in CRM)
  *  3. Sends email to info@easytoeurope.com via Gmail (Nodemailer)
  *
  *  ⚠️  ACTION NEEDED BEFORE GOING LIVE ⚠️
  *  ─────────────────────────────────────
- *  Line ~29: EVENT_CRM_SOURCE_ID → this is a PLACEHOLDER (19).
- *  Just like the main site's "Website" source uses source_id 18
- *  (fetched from /api/info-form/website), this event needs its
- *  own source_id from the CRM — the same place you got 18 from,
- *  using the "Aug 14-15 Event" source (matching the link you have:
- *  https://ete.sveducrm.com/info-form/aug_14-15_event).
- *  Ask your CRM admin / check the CRM's source list, then update
- *  the number below. Leads will still be created even if this is
- *  wrong, but they may land under the wrong source in CRM until
- *  it's corrected.
+ *  Each event's own content file (src/data/events/*.ts) has a
+ *  `crmSourceId` field — a PLACEHOLDER for now. Just like the main
+ *  site's "Website" source uses source_id 18, every event needs its
+ *  own source_id from the CRM. Ask your CRM admin / check the CRM's
+ *  source list for each event, then update the number in that
+ *  event's content file. Leads will still be created even if this
+ *  is wrong, but they may land under the wrong source in CRM until
+ *  it's corrected. (You mentioned you'll handle this yourself later
+ *  — nothing here blocks form submissions in the meantime.)
  *
  *  EMAIL SETUP (.env.local) — same as the rest of the site:
  *  GMAIL_USER=info@easytoeurope.com
@@ -32,9 +32,11 @@ import { NextRequest, NextResponse } from "next/server";
 import nodemailer from "nodemailer";
 
 /* ─── CRM Config ─────────────────────────────────────── */
-const CRM_ENDPOINT        = "https://crm.ete.sveducrm.com/api/web-form";
-const EVENT_CRM_SOURCE    = "Aug 14-15 Event"; // ⚠️ must exist as a Source in CRM
-const EVENT_CRM_SOURCE_ID = 22;                 // ⚠️ PLACEHOLDER — verify & update, see note above
+const CRM_ENDPOINT = "https://crm.ete.sveducrm.com/api/web-form";
+// Fallback source (used only if a page doesn't send its own — keeps
+// the original Summit 2026 page working unchanged either way)
+const DEFAULT_CRM_SOURCE    = "Aug 14-15 Event";
+const DEFAULT_CRM_SOURCE_ID = 22; // ⚠️ PLACEHOLDER — verify & update
 
 /* ─── Email Config ───────────────────────────────────── */
 const NOTIFY_EMAIL = "info@easytoeurope.com";
@@ -54,16 +56,23 @@ const COUNTRY_IDS: Record<string, number> = {
   "Denmark":        8,
   "Cyprus":         14,
   "Netherlands":    13,
-  "Greece":         30,   // ⚠️ PLACEHOLDER — verify real ID from CRM /base-filter API
+  "Malta":          15,
 };
 
 export async function POST(req: NextRequest) {
   try {
-    const { name, phone, email, destination, level, ielts, message } = await req.json();
+    const {
+      name, phone, email, destination, level, ielts, message,
+      eventSource, eventSourceId, eventTitle,
+    } = await req.json();
 
     if (!name?.trim() || (!phone?.trim() && !email?.trim())) {
       return NextResponse.json({ success: false, error: "Name and phone or email are required." }, { status: 400 });
     }
+
+    const CRM_SOURCE    = eventSource   || DEFAULT_CRM_SOURCE;
+    const CRM_SOURCE_ID = eventSourceId ?? DEFAULT_CRM_SOURCE_ID;
+    const EVENT_TITLE   = eventTitle    || "Multi-Destination Education Summit 2026";
 
     /* ── Build CRM Payload ── */
     const preferredCountries = destination && COUNTRY_IDS[destination] ? [COUNTRY_IDS[destination]] : [];
@@ -76,13 +85,13 @@ export async function POST(req: NextRequest) {
       additional_phone: "",
       additional_field: [],
       email: email?.trim() ?? "",
-      source: EVENT_CRM_SOURCE,
-      source_id: EVENT_CRM_SOURCE_ID,
+      source: CRM_SOURCE,
+      source_id: CRM_SOURCE_ID,
       lead_status_id: null,
       assignees: [],
       preferred_countries: preferredCountries,
       country_id: 1,
-      description: message ? `[Multi-Destination Education Summit 2026] ${message}` : "[Multi-Destination Education Summit 2026 registration]",
+      description: message ? `[${EVENT_TITLE}] ${message}` : `[${EVENT_TITLE} registration]`,
       address: "", city: "", state: "",
       contacted_date: new Date().toISOString().split("T")[0],
       educations: level ? [level] : [],
@@ -111,14 +120,14 @@ export async function POST(req: NextRequest) {
       const crmData = await crmRes.json();
       if (crmData.success) {
         crmLeadId = crmData.data?.id ?? null;
-        console.log(`✅ [Summit 2026] CRM lead created: #${crmLeadId}`);
+        console.log(`✅ [${EVENT_TITLE}] CRM lead created: #${crmLeadId}`);
       } else {
         crmError = crmData.message ?? "CRM error";
-        console.error("❌ [Summit 2026] CRM error:", JSON.stringify(crmData));
+        console.error(`❌ [${EVENT_TITLE}] CRM error:`, JSON.stringify(crmData));
       }
     } catch (e) {
       crmError = "Could not reach CRM";
-      console.error("❌ [Summit 2026] CRM network error:", e);
+      console.error(`❌ [${EVENT_TITLE}] CRM network error:`, e);
     }
 
     /* ── 2. Send Email via Gmail ── */
@@ -136,14 +145,14 @@ export async function POST(req: NextRequest) {
         });
 
         await transporter.sendMail({
-          from:    `"Easy To Europe — Summit 2026" <${GMAIL_USER}>`,
+          from:    `"Easy To Europe — ${EVENT_TITLE}" <${GMAIL_USER}>`,
           to:      NOTIFY_EMAIL,
-          subject: `🌍 New Summit 2026 Registration — ${name}`,
+          subject: `🌍 New ${EVENT_TITLE} Registration — ${name}`,
           html: `
             <div style="font-family:Arial,sans-serif;max-width:560px;margin:0 auto;border:1px solid #e5e7eb;border-radius:10px;overflow:hidden">
               <div style="background:#0F1F3D;padding:20px 24px">
-                <h1 style="color:#fff;margin:0;font-size:18px">New Summit 2026 Registration</h1>
-                <p style="color:rgba(255,255,255,0.7);margin:4px 0 0;font-size:13px">Multi-Destination Education Summit — 14 &amp; 15 August</p>
+                <h1 style="color:#fff;margin:0;font-size:18px">New Registration</h1>
+                <p style="color:rgba(255,255,255,0.7);margin:4px 0 0;font-size:13px">${EVENT_TITLE}</p>
               </div>
               <div style="padding:24px">
                 <table style="width:100%;border-collapse:collapse;font-size:14px">
@@ -154,21 +163,21 @@ export async function POST(req: NextRequest) {
                   <tr><td style="padding:8px 0;color:#6b7280">Study Level</td><td style="padding:8px 0;color:#111827">${level || "—"}</td></tr>
                   <tr style="background:#f9fafb"><td style="padding:8px 6px;color:#6b7280">IELTS Score</td><td style="padding:8px 6px;color:#111827">${ielts || "—"}</td></tr>
                   <tr><td style="padding:8px 0;color:#6b7280;vertical-align:top">Message</td><td style="padding:8px 0;color:#111827">${message || "—"}</td></tr>
-                  <tr style="background:#f9fafb"><td style="padding:8px 6px;color:#6b7280">Source</td><td style="padding:8px 6px;color:#0F1F3D;font-weight:600">Aug 14-15 Event (Summit landing page)</td></tr>
+                  <tr style="background:#f9fafb"><td style="padding:8px 6px;color:#6b7280">Source</td><td style="padding:8px 6px;color:#0F1F3D;font-weight:600">${CRM_SOURCE}</td></tr>
                   <tr><td style="padding:8px 0;color:#6b7280">CRM Lead</td><td style="padding:8px 0;color:#0F1F3D;font-weight:600">${crmLeadId ? `#${crmLeadId}` : crmError ?? "—"}</td></tr>
                   <tr style="background:#f9fafb"><td style="padding:8px 6px;color:#6b7280">Submitted</td><td style="padding:8px 6px;color:#111827">${now}</td></tr>
                 </table>
               </div>
               <div style="background:#f3f4f6;padding:14px 24px;font-size:12px;color:#9ca3af">
-                This email was auto-sent from the easytoeurope.com Summit 2026 registration page.
+                This email was auto-sent from the easytoeurope.com "${EVENT_TITLE}" registration page.
               </div>
             </div>
           `,
         });
         emailSent = true;
-        console.log("✅ [Summit 2026] Email sent to", NOTIFY_EMAIL);
+        console.log(`✅ [${EVENT_TITLE}] Email sent to`, NOTIFY_EMAIL);
       } catch (e) {
-        console.error("❌ [Summit 2026] Email error:", e);
+        console.error(`❌ [${EVENT_TITLE}] Email error:`, e);
       }
     } else {
       console.log("📩 [DEV] Email not configured. Add GMAIL_USER + GMAIL_PASS to .env.local");

@@ -37,11 +37,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     lastModified: now,
   }));
 
-  // Event detail pages
+  // Event landing pages — each event's own URL if it has one
+  // (e.g. /summit-2026), otherwise the default /events/{id}.
   const eventPages = events.map((e: any) => ({
-    url: `${baseUrl}/events/${e.id}`,
-    priority: 0.6,
-    changeFrequency: "weekly" as const,
+    url: `${baseUrl}${e.path || `/events/${e.id}`}`,
+    priority: 0.85,
+    changeFrequency: "daily" as const,
     lastModified: now,
   }));
 

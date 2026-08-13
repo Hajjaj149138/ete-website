@@ -1,5 +1,5 @@
+import { redirect, notFound } from "next/navigation";
 import { events } from "@/data/content";
-import { notFound } from "next/navigation";
 import Link from "next/link";
 import ConsultationButton from "@/components/ui/ConsultationButton";
 import { Calendar, MapPin, Clock, ArrowLeft, Users, ExternalLink, CheckCircle, Share2 } from "lucide-react";
@@ -31,6 +31,7 @@ export async function generateMetadata({ params }: { params: { id: string } }) {
 export default function EventDetailPage({ params }: { params: { id: string } }) {
   const evt = events.find(e => e.id === params.id);
   if (!evt) notFound();
+  if (evt.path) redirect(evt.path);
   const color = TYPE_COLOR[evt.type] ?? "#374151";
   const isPast = new Date(evt.endDate) < new Date();
   const isOnline = evt.location.toLowerCase().includes("online") || evt.location.toLowerCase().includes("zoom") || evt.location.toLowerCase().includes("google");
@@ -154,7 +155,7 @@ export default function EventDetailPage({ params }: { params: { id: string } }) 
             {events.filter(e=>e.id!==evt.id && new Date(e.endDate)>new Date()).slice(0,3).map(e=>{
               const c2 = TYPE_COLOR[e.type]??"#374151";
               return (
-                <Link key={e.id} href={`/events/${e.id}`} style={{textDecoration:"none"}}>
+                <Link key={e.id} href={e.path || `/events/${e.id}`} style={{textDecoration:"none"}}>
                   <div className="card" style={{padding:"16px",transition:"transform .2s,box-shadow .2s",cursor:"pointer"}}>
                     <div style={{display:"flex",gap:12,alignItems:"flex-start"}}>
                       <div style={{width:46,height:52,borderRadius:10,background:`${c2}12`,border:`1px solid ${c2}28`,display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",flexShrink:0}}>

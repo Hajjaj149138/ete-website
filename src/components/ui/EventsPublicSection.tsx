@@ -80,7 +80,7 @@ function FeaturedSlide({ evt }: { evt: Event }) {
       <p className="evt2-feat-desc">{evt.description}</p>
 
       <div style={{padding:"0 20px 20px"}}>
-        <Link href={`/events/${evt.id}`} className="ete-btn ete-btn-accent ete-btn-sm" style={{display:"inline-flex"}}>
+        <Link href={evt.path || `/events/${evt.id}`} className="ete-btn ete-btn-accent ete-btn-sm" style={{display:"inline-flex"}}>
           View Details <ChevronRight size={13}/>
         </Link>
       </div>
@@ -165,7 +165,7 @@ export default function EventsPublicSection({ events: _ignored }: { events: Even
                 const c2 = TYPE_COLOR[evt.type]??TYPE_COLOR.Other;
                 const isActive = evt.id===featured.id;
                 return (
-                  <Link key={evt.id} href={`/events/${evt.id}`}
+                  <Link key={evt.id} href={evt.path || `/events/${evt.id}`}
                     className={`evt2-list-item${isActive?" evt2-item-active":""}`}
                     style={isActive?{borderLeft:`3px solid ${c2.bg}`,background:`${c2.bg}05`}:{}}
                     onClick={()=>{setFeatIdx(upcoming.indexOf(evt));setPaused(true);}}>

@@ -40,7 +40,7 @@ export const eventCountries: EventCountry[] = [
   { slug: "malaysia",        name: "Malaysia",         flag: "🇲🇾" },
   { slug: "austria",         name: "Austria",          flag: "🇦🇹" },
   { slug: "cyprus",          name: "Cyprus",           flag: "🇨🇾" },
-  { slug: "greece",          name: "Greece",           flag: "🇬🇷" },
+  { slug: "malta",           name: "Malta",            flag: "🇲🇹" },
 ];
 
 // ── Exclusive Event Benefits ─────────────────────────────────────

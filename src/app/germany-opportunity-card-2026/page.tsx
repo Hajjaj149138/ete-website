@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import EventLandingClient from "@/components/events/EventLandingClient";
+import { buildEventSchema } from "@/lib/eventSchema";
 import { germanyOpportunityCard } from "@/data/events/germanyOpportunityCard";
 
 export const metadata: Metadata = {
@@ -23,5 +24,13 @@ export const metadata: Metadata = {
 };
 
 export default function Page() {
-  return <EventLandingClient content={germanyOpportunityCard} />;
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(buildEventSchema(germanyOpportunityCard, "/germany-opportunity-card-2026")) }}
+      />
+      <EventLandingClient content={germanyOpportunityCard} />
+    </>
+  );
 }

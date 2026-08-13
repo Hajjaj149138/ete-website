@@ -1,9 +1,36 @@
 import { notFound } from "next/navigation";
+import type { Metadata } from "next";
 import { careerPathways } from "@/data/content";
 import ConsultationButton from "@/components/ui/ConsultationButton";
 import { CheckCircle } from "lucide-react";
 interface Props { params: { slug:string } }
 export async function generateStaticParams() { return careerPathways.map(p=>({slug:p.slug})); }
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const pathway = careerPathways.find(p => p.slug === params.slug);
+  if (!pathway) return {};
+  const title = `${pathway.name} | Career Pathways | Easy To Europe`;
+  const description = pathway.tagline || `Explore the ${pathway.name} career pathway with Easy To Europe — expert guidance from application to placement.`;
+  return {
+    title,
+    description,
+    alternates: { canonical: `/career-pathways/${pathway.slug}` },
+    openGraph: {
+      type: "website",
+      url: `https://easytoeurope.com/career-pathways/${pathway.slug}`,
+      title,
+      description,
+      images: [{ url: "/og-image.jpg", width: 1200, height: 630, alt: pathway.name }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images: ["/og-image.jpg"],
+    },
+  };
+}
+
 export default function Page({ params }:Props) {
   const pathway = careerPathways.find(p => p.slug === params.slug);
   if (!pathway) notFound();

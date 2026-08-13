@@ -7,10 +7,14 @@ import { ThemeProvider } from "@/lib/ThemeContext";
 import { ConsultationProvider } from "@/lib/ConsultationContext";
 
 // ─────────────────────────────────────────────────────────────────
-// 🔷 FACEBOOK PIXEL — Replace with your real Pixel ID
+// 🔷 FACEBOOK PIXEL — set NEXT_PUBLIC_FB_PIXEL_ID in .env.local
 // How: Facebook Business → Events Manager → Pixels → copy the ID
+// 🔷 GOOGLE ANALYTICS (GA4) — set NEXT_PUBLIC_GA_MEASUREMENT_ID in .env.local
+// How: Google Analytics → Admin → Data Streams → your web stream → Measurement ID (starts with G-)
+// Neither script loads until you add the real ID — no placeholder ever fires.
 // ─────────────────────────────────────────────────────────────────
-const FB_PIXEL_ID = "1234567890123456";
+const FB_PIXEL_ID = process.env.NEXT_PUBLIC_FB_PIXEL_ID ?? "";
+const GA_ID        = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID ?? "";
 
 export const metadata: Metadata = {
   title: {
@@ -98,12 +102,32 @@ export default function RootLayout({
           }}
         />
 
-        {/* ── Facebook Pixel ── */}
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init','${FB_PIXEL_ID}');fbq('track','PageView');`,
-          }}
-        />
+        {/* ── Facebook Pixel (only fires once NEXT_PUBLIC_FB_PIXEL_ID is set) ── */}
+        {FB_PIXEL_ID && (
+          <>
+            <script
+              dangerouslySetInnerHTML={{
+                __html: `!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init','${FB_PIXEL_ID}');fbq('track','PageView');`,
+              }}
+            />
+            <noscript>
+              <img height="1" width="1" style={{ display: "none" }} alt=""
+                src={`https://www.facebook.com/tr?id=${FB_PIXEL_ID}&ev=PageView&noscript=1`} />
+            </noscript>
+          </>
+        )}
+
+        {/* ── Google Analytics / GA4 (only fires once NEXT_PUBLIC_GA_MEASUREMENT_ID is set) ── */}
+        {GA_ID && (
+          <>
+            <script async src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`} />
+            <script
+              dangerouslySetInnerHTML={{
+                __html: `window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','${GA_ID}');`,
+              }}
+            />
+          </>
+        )}
 
         {/* ── Local Business Schema (JSON-LD) ── */}
         <script
@@ -113,10 +137,12 @@ export default function RootLayout({
               "@context": "https://schema.org",
               "@type": "EducationalOrganization",
               name: "Easy To Europe",
+              alternateName: ["EasyToEurope", "Easy To Europe BD", "Easy Europe", "ETE Bangladesh"],
               description:
                 "Bangladesh's most trusted education consultancy for studying in Europe, UK, Canada & Australia.",
               url: "https://easytoeurope.com",
               logo: "https://easytoeurope.com/favicon-192.png",
+              image: "https://easytoeurope.com/og-image.jpg",
               telephone: "+88 01896 511151",
               email: "info@easytoeurope.com",
               foundingDate: "2020",
@@ -135,6 +161,30 @@ export default function RootLayout({
                 "@type": "AggregateRating",
                 ratingValue: "4.9",
                 reviewCount: "200",
+              },
+            }),
+          }}
+        />
+
+        {/* ── WebSite schema — helps "Easy To Europe" / "easytoeurope" brand
+             searches resolve straight to this site (and enables a Google
+             sitelinks search box if Google chooses to show one) ── */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "WebSite",
+              name: "Easy To Europe",
+              alternateName: ["EasyToEurope", "Easy Europe", "easytoeurope.com"],
+              url: "https://easytoeurope.com",
+              potentialAction: {
+                "@type": "SearchAction",
+                target: {
+                  "@type": "EntryPoint",
+                  urlTemplate: "https://easytoeurope.com/study-destinations?q={search_term_string}",
+                },
+                "query-input": "required name=search_term_string",
               },
             }),
           }}

@@ -731,7 +731,7 @@ export const aboutData = {
     { name: "Masuda Parvin Sraboni", photo: "/images/team/staff/masuda-parvin-sraboni.jpg", role: "Senior Education Consultant",  nickname: "",             trait: "Student Champion" },
     //{ name: "Sraboni", photo: "/images/team/staff/sraboni.jpg",           role: "Senior UK Consultant",             nickname: "Moana",        trait: "Confident Mentor" },
     { name: "Tanjina", photo: "/images/team/staff/tanjina.jpg",           role: "Customer Executive",               nickname: "Snow White",   trait: "Clarity & Hope" },
-    { name: "Md. Hajjaj Bin Sonosi", photo: "/images/team/staff/hajjaj.jpg",            role: "IT Lead",                          nickname: "Thor",         trait: "Tech Power" },
+    { name: "Md. Hajjaj Bin Sonosi", photo: "/images/team/staff/hajjaj.jpg",            role: "IT Lead & Full Stack Software Engineer",                          nickname: "Thor",         trait: "Tech Power" },
     { name: "Tanny", photo: "/images/team/staff/tanny.jpg",             role: "Compliance",                       nickname: "Belle",        trait: "Clever Thinker" },
     { name: "Tasfea Mahjabin", photo: "/images/team/staff/tasfea-mahjabin.jpg",   role: "Education Consultant",             nickname: "Prithy",       trait: "Dedicated Guide" },
     { name: "Mehidi", photo: "/images/team/staff/mehidi.jpg",            role: "Senior Advisor",                   nickname: "Yoda",         trait: "Wise Mentorship" },

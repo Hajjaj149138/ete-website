@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import EventLandingClient from "@/components/events/EventLandingClient";
+import { buildEventSchema } from "@/lib/eventSchema";
 import { nordicBalticExpo } from "@/data/events/nordicBalticExpo";
 
 export const metadata: Metadata = {
@@ -23,5 +24,13 @@ export const metadata: Metadata = {
 };
 
 export default function Page() {
-  return <EventLandingClient content={nordicBalticExpo} />;
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(buildEventSchema(nordicBalticExpo, "/nordic-baltic-expo-2026")) }}
+      />
+      <EventLandingClient content={nordicBalticExpo} />
+    </>
+  );
 }

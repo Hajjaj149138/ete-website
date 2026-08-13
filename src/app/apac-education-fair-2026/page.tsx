@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import EventLandingClient from "@/components/events/EventLandingClient";
+import { buildEventSchema } from "@/lib/eventSchema";
 import { apacEducationFair } from "@/data/events/apacEducationFair";
 
 export const metadata: Metadata = {
@@ -23,5 +24,13 @@ export const metadata: Metadata = {
 };
 
 export default function Page() {
-  return <EventLandingClient content={apacEducationFair} />;
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(buildEventSchema(apacEducationFair, "/apac-education-fair-2026")) }}
+      />
+      <EventLandingClient content={apacEducationFair} />
+    </>
+  );
 }

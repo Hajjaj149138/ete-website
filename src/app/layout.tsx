@@ -83,7 +83,7 @@ export const metadata: Metadata = {
     apple: "/favicon-192.png",
   },
   verification: {
-    // google: "YOUR_GOOGLE_SEARCH_CONSOLE_VERIFICATION_CODE", // ← uncomment & add your code
+    google: "3xl55F31RUQfQMSmuXWbEDp413bwLtK8PYVVjRL_eIM",
   },
 };
 

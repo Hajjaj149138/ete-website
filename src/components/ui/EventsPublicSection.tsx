@@ -4,6 +4,7 @@ import Link from "next/link";
 import { Calendar, MapPin, Clock, ChevronRight, ChevronLeft, Zap, ArrowRight } from "lucide-react";
 import type { Event } from "@/data/content";
 import { events as defaultEvents } from "@/data/content";
+import { getCurrentOccurrence } from "@/lib/eventDates";
 
 const STORAGE_KEY = "ete_admin_events";
 
@@ -102,7 +103,14 @@ export default function EventsPublicSection({ events: _ignored }: { events: Even
   },[]);
 
   const now = new Date();
-  const upcoming = allEvents
+  // Every event repeats every 3 months — roll each one forward to
+  // whichever occurrence is current/next, instead of just hiding it
+  // once the originally-stored date has passed.
+  const recurring = allEvents.map(e => {
+    const occ = getCurrentOccurrence(e.startDate, e.endDate);
+    return { ...e, startDate: occ.startDate.toISOString(), endDate: occ.endDate.toISOString() };
+  });
+  const upcoming = recurring
     .filter(e => new Date(e.endDate) > now)
     .sort((a,b) => new Date(a.startDate).getTime()-new Date(b.startDate).getTime());
 
@@ -128,6 +136,9 @@ export default function EventsPublicSection({ events: _ignored }: { events: Even
           <span className="ete-tag"><Calendar size={10}/> Upcoming Events</span>
           <h2 className="ete-sec-title">Events & <span>Seminars</span></h2>
           <p className="ete-sec-sub">Join our free sessions, workshops, and university fairs.</p>
+          <Link href="/events" className="uni-carousel-view-all">
+            View All Events <ArrowRight size={13}/>
+          </Link>
         </div>
 
         <div className="evt2-layout reveal">

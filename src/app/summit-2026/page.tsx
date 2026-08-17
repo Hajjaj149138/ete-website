@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import SummitClient from "./SummitClient";
+import { getCurrentOccurrenceISO } from "@/lib/eventDates";
 
 export const metadata: Metadata = {
   title: "Multi-Destination Education Summit 2026 | Easy To Europe",
@@ -23,6 +24,7 @@ export const metadata: Metadata = {
 };
 
 export default function Summit2026Page() {
+  const { startISO, endISO } = getCurrentOccurrenceISO("2026-08-14T10:00:00+06:00", "2026-08-15T18:00:00+06:00");
   return (
     <>
       <script
@@ -33,8 +35,8 @@ export default function Summit2026Page() {
             "@type": "Event",
             name: "Multi-Destination Education Summit 2026",
             description: "Explore study options across 12 leading destinations under one roof — meet consultants, get scholarship guidance, and unlock exclusive event-only offers.",
-            startDate: "2026-08-14T10:00:00+06:00",
-            endDate: "2026-08-15T18:00:00+06:00",
+            startDate: startISO,
+            endDate: endISO,
             eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
             eventStatus: "https://schema.org/EventScheduled",
             location: {

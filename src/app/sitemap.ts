@@ -12,6 +12,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${baseUrl}/services`,                priority: 0.9, changeFrequency: "monthly" as const },
     { url: `${baseUrl}/study-destinations`,      priority: 0.9, changeFrequency: "weekly"  as const },
     { url: `${baseUrl}/partner-universities`,    priority: 0.9, changeFrequency: "weekly"  as const },
+    { url: `${baseUrl}/events`,                  priority: 0.85, changeFrequency: "daily"  as const },
     { url: `${baseUrl}/career-pathways`,         priority: 0.8, changeFrequency: "monthly" as const },
     { url: `${baseUrl}/achievements`,            priority: 0.7, changeFrequency: "monthly" as const },
     { url: `${baseUrl}/contact`,                 priority: 0.8, changeFrequency: "monthly" as const },

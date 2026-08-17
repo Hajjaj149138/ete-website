@@ -1,13 +1,15 @@
 import type { EventLandingContent } from "@/components/events/EventLandingClient";
+import { getCurrentOccurrenceISO } from "@/lib/eventDates";
 
 export function buildEventSchema(content: EventLandingContent, path: string) {
+  const { startISO, endISO } = getCurrentOccurrenceISO(content.startsAtISO, content.endsAtISO);
   return {
     "@context": "https://schema.org",
     "@type": "Event",
     name: `${content.title} ${content.titleAccent}`,
     description: content.subtitle,
-    startDate: content.startsAtISO,
-    endDate: content.endsAtISO,
+    startDate: startISO,
+    endDate: endISO,
     eventAttendanceMode: content.venue.toLowerCase().includes("online")
       ? "https://schema.org/OnlineEventAttendanceMode"
       : "https://schema.org/OfflineEventAttendanceMode",

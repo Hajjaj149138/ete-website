@@ -21,6 +21,7 @@ import {
   MapPin, Calendar, Gift, GraduationCap, ArrowRight,
 } from "lucide-react";
 import { siteConfig } from "@/data/content";
+import { getCurrentOccurrence, formatEventDateLabel } from "@/lib/eventDates";
 
 export type EventCountry = { slug: string; name: string; flag: string; hasPhoto?: boolean };
 
@@ -56,19 +57,22 @@ const IELTS  = ["4.5", "5.0", "5.5", "6.0", "6.5", "7.0", "7.5", "8.0", "8.5", "
 type Status = "idle" | "loading" | "success" | "error";
 type Phase  = "before" | "live" | "ended";
 
-function useCountdown(startISO: string, endISO: string) {
+function useCountdown(originalStartISO: string, originalEndISO: string) {
   const [state, setState] = useState<{ phase: Phase; d: number; h: number; m: number; s: number }>({
     phase: "before", d: 0, h: 0, m: 0, s: 0,
   });
 
   useEffect(() => {
-    const start = new Date(startISO).getTime();
-    const end   = new Date(endISO).getTime();
-
     const tick = () => {
+      // Recompute the current/next occurrence every tick — once this
+      // cycle's endDate passes, this automatically rolls forward to
+      // the next occurrence (every 3 months) instead of getting stuck.
+      const { startDate, endDate } = getCurrentOccurrence(originalStartISO, originalEndISO);
+      const start = startDate.getTime();
+      const end   = endDate.getTime();
       const now = Date.now();
-      if (now >= end) { setState({ phase: "ended", d: 0, h: 0, m: 0, s: 0 }); return; }
-      if (now >= start) { setState({ phase: "live", d: 0, h: 0, m: 0, s: 0 }); return; }
+
+      if (now >= start && now < end) { setState({ phase: "live", d: 0, h: 0, m: 0, s: 0 }); return; }
 
       const diff = start - now;
       const d = Math.floor(diff / 86400000);
@@ -81,13 +85,15 @@ function useCountdown(startISO: string, endISO: string) {
     tick();
     const iv = setInterval(tick, 1000);
     return () => clearInterval(iv);
-  }, [startISO, endISO]);
+  }, [originalStartISO, originalEndISO]);
 
   return state;
 }
 
 export default function EventLandingClient({ content }: { content: EventLandingContent }) {
   const countdown = useCountdown(content.startsAtISO, content.endsAtISO);
+  const currentOccurrence = getCurrentOccurrence(content.startsAtISO, content.endsAtISO);
+  const dateLabel = formatEventDateLabel(currentOccurrence.startDate, currentOccurrence.endDate);
 
   const [status, setStatus] = useState<Status>("idle");
   const [errMsg, setErrMsg] = useState("");
@@ -144,7 +150,7 @@ export default function EventLandingClient({ content }: { content: EventLandingC
             <p className="smt-hero-sub">{content.subtitle}</p>
 
             <div className="smt-hero-meta">
-              <span className="smt-meta-pill"><Calendar size={13} /> {content.dateLabel}</span>
+              <span className="smt-meta-pill"><Calendar size={13} /> {dateLabel}</span>
               <span className="smt-meta-pill"><MapPin size={13} /> {content.venue}</span>
             </div>
 
@@ -261,7 +267,7 @@ export default function EventLandingClient({ content }: { content: EventLandingC
               <div className="smt-cta-info">
                 <div className="smt-cta-info-item">
                   <div className="smt-cta-info-icon"><Calendar size={16} /></div>
-                  <div><div className="smt-cta-info-lbl">Date</div><div className="smt-cta-info-val">{content.dateLabel}</div></div>
+                  <div><div className="smt-cta-info-lbl">Date</div><div className="smt-cta-info-val">{dateLabel}</div></div>
                 </div>
                 <div className="smt-cta-info-item">
                   <div className="smt-cta-info-icon"><MapPin size={16} /></div>
@@ -293,7 +299,7 @@ export default function EventLandingClient({ content }: { content: EventLandingC
                 <div className="ete-consult-success-ring"><CheckCircle size={26} /></div>
                 <h2 className="ete-consult-success-title">You're Registered! 🎉</h2>
                 <p className="ete-consult-success-sub">
-                  Our expert team will confirm your seat within <strong>24 hours</strong>. See you there — {content.dateLabel}!
+                  Our expert team will confirm your seat within <strong>24 hours</strong>. See you there — {dateLabel}!
                 </p>
                 <div className="ete-consult-success-btns">
                   <a href={`https://wa.me/${siteConfig.whatsapp}?text=${encodeURIComponent(content.whatsappMessage)}`}
